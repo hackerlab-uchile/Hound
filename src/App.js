@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import Location from './accelerometer/Localization'
+import Accelerometer from './accelerometer/accelerometer'
 
 function App() {
   return (
     <div className="App">
-      {Location}
+      <Accelerometer />
     </div>
   );
 }
