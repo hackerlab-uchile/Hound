@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start":
-        "HTTPS=true <strong>SSL_CRT_FILE=./reactcert/cert.pem SSL_KEY_FILE=./reactcert", 
+        "HTTPS=true && SSL_CRT_FILE=./reactcert/cert.pem SSL_KEY_FILE=./reactcert react-scripts start", 
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

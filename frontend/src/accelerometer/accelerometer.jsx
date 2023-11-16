@@ -28,8 +28,11 @@ function Accelerometer() {
 
   function handleMotionEvent(event) {
     setX(event.acceleration.x);
+    console.log("x:", x)
     setY(event.acceleration.y);
+    console.log("y:", y)
     setZ(event.acceleration.z);
+    console.log("z:", z)
   }
 
   function handlePermissionGranted() {
@@ -51,6 +54,7 @@ function Accelerometer() {
           <p>Y: {y}</p>
           <p>Z: {z}</p>
         </>
+      
       ) : (
         <div className="modal" id="modal">
           <div className="modal-content">
