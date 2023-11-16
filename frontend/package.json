@@ -17,7 +17,8 @@
     "typescript": "4.1.3"
   },
   "scripts": {
-    "start": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem react-scripts start",
+    "start":
+        "HTTPS=true <strong>SSL_CRT_FILE=./reactcert/cert.pem SSL_KEY_FILE=./reactcert", 
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
