@@ -10,4 +10,7 @@ $ npm start
 
 ```
 
-- For backend 
+- For backend
+```
+$ uvicorn main:app --reload
+```
