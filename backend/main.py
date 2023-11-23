@@ -11,8 +11,8 @@ app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
 def get_db():
-    try: 
-        db = SessionLocal
+    db = SessionLocal
+    try:
         yield db
     finally:
         db.close()
@@ -24,10 +24,10 @@ class NetworkScan(BaseModel):
     area_started_at: datetime = None
 
 class LocationScan(BaseModel):
-    network_scan_id: str = Field(min_length=1, max_length=100) 
-    x: int = Field(gt=-1, lt=101)
-    y: int = Field(gt=-1, lt=101)
-    z: int = Field(gt=0, lt=101)
+    network_scan_id: int = Field(gt=-1, lt=101)
+    x: int = Field(gt=-101, lt=101)
+    y: int = Field(gt=-101, lt=101)
+    z: int = Field(gt=-101, lt=101)
     area_started_at: datetime = None
 
 # Models results
@@ -47,16 +47,21 @@ def create_scan(network_scan: NetworkScan):
 
 @app.get("/locations")
 async def get_locations(db: Session = Depends(get_db)):
-    return db.query(models.Locations).all()
+    return db.query(models.LocationScans).all()
 
 @app.post("/locations")
 def create_location(location_scan: LocationScan, db: Session = Depends(get_db)):
-    location_scan_model = models.LocationScan()
+    location_scan_model = models.LocationScans()
     location_scan_model.network_scan_id = location_scan.network_scan_id
     location_scan_model.x = location_scan.x
+    print("x:", location_scan_model.x)
     location_scan_model.y = location_scan.y
     location_scan_model.z = location_scan.z
     location_scan_model.area_started_at = location_scan.area_started_at
+    print("area:", location_scan_model.area_started_at)
+    print ("test", location_scan_model, location_scan)
 
     db.add(location_scan_model)
+    db.commit()
+
     return location_scan
