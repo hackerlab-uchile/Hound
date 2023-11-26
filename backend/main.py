@@ -21,14 +21,14 @@ def get_db():
 class NetworkScan(BaseModel):
     status: int = Field(gt=-1, lt=101)
     signal_started_at: datetime = None
-    area_started_at: datetime = None
+    location_started_at: datetime = None
 
 class LocationScan(BaseModel):
     network_scan_id: int = Field(gt=-1, lt=101)
     x: int = Field(gt=-101, lt=101)
     y: int = Field(gt=-101, lt=101)
     z: int = Field(gt=-101, lt=101)
-    area_started_at: datetime = None
+    location_started_at: datetime = None
 
 # Models results
 SCANS = []
@@ -57,8 +57,8 @@ def create_location(location_scan: LocationScan, db: Session = Depends(get_db)):
     print("x:", location_scan_model.x)
     location_scan_model.y = location_scan.y
     location_scan_model.z = location_scan.z
-    location_scan_model.area_started_at = location_scan.area_started_at
-    print("area:", location_scan_model.area_started_at)
+    location_scan_model.location_started_at = location_scan.location_started_at
+    print("area:", location_scan_model.location_started_at)
     print ("test", location_scan_model, location_scan)
 
     db.add(location_scan_model)
