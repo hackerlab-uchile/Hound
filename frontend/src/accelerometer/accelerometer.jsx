@@ -1,10 +1,30 @@
 import React, { useEffect, useState } from "react";
+import api from "../api/api";
 
 function Accelerometer() {
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [x, setX] = useState(null);
   const [y, setY] = useState(null);
   const [z, setZ] = useState(null);
+  const [currentTime, setCurrentTime] = useState(null); 
+  const [networkScan, setNetworkScan] = useState({
+    status: '',
+    signal_started_at: '',
+    location_started_at: ''
+  });
+  const [locationData, setLocationData] = useState({
+    network_scan_id: '',
+    x: '',
+    y: '',
+    z: '',
+    location_started_at: ''
+  });
+
+  // const fetchLocationData = async () => {
+  //   const response = await api.get('/locations/')
+  //   setLocationData(response.data)
+  // }
+
 
   useEffect(() => {
     if (typeof DeviceMotionEvent.requestPermission === "function") {
@@ -33,6 +53,18 @@ function Accelerometer() {
     console.log("y:", y)
     setZ(event.acceleration.z);
     console.log("z:", z)
+    setCurrentTime((new Date()).toJSON())
+    console.log("date:", currentTime);
+
+    setTimeout(async() => {
+      await api.post('/locations', locationData);
+      setLocationData({
+        x: x,
+        y: y,
+        z: z, 
+        location_started_at: currentTime
+      });
+    }, 1)
   }
 
   function handlePermissionGranted() {
