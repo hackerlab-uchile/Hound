@@ -56,15 +56,15 @@ function Accelerometer() {
     setCurrentTime((new Date()).toJSON())
     console.log("date:", currentTime);
 
-    setTimeout(async() => {
-      await api.post('/locations', locationData);
-      setLocationData({
-        x: x,
-        y: y,
-        z: z, 
-        location_started_at: currentTime
-      });
-    }, 1)
+    // setTimeout(async() => {
+    //   await api.post('/locations', locationData);
+    //   setLocationData({
+    //     x: x,
+    //     y: y,
+    //     z: z, 
+    //     location_started_at: currentTime
+    //   });
+    // }, 1)
   }
 
   function handlePermissionGranted() {
