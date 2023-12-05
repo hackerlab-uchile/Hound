@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import api from "../api/api";
 
 function Accelerometer() {
+
+  // mock data //
+  const [mockX, setMockX] = useState(null);
+  const [mockY, setMockY] = useState(null);
+  const [mockZ, setMockZ] = useState(null);
+  // mock data //
+
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [x, setX] = useState(null);
   const [y, setY] = useState(null);
@@ -20,10 +27,27 @@ function Accelerometer() {
     location_started_at: ''
   });
 
-  // const fetchLocationData = async () => {
-  //   const response = await api.get('/locations/')
-  //   setLocationData(response.data)
-  // }
+  /////// MOCK DATA GENERATOR ///////
+  function newRandomNumber(min, max){
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
+  }
+
+  function generateRandomNumber(){
+    setTimeout(() => {
+      setMockX(newRandomNumber(1, 10));
+      setMockY(newRandomNumber(1, 10));
+      setMockZ(newRandomNumber(1, 10));
+    }, 1)
+  }
+  /////// MOCK DATA GENERATOR ///////
+
+  console.log("x, y, z:", mockX, mockY, mockZ);
+
+
+  const fetchLocationData = async () => {
+    const response = await api.get('/locations')
+    setLocationData(response.data)
+  }
 
 
   useEffect(() => {
@@ -48,23 +72,20 @@ function Accelerometer() {
 
   function handleMotionEvent(event) {
     setX(event.acceleration.x);
-    console.log("x:", x)
     setY(event.acceleration.y);
-    console.log("y:", y)
     setZ(event.acceleration.z);
-    console.log("z:", z)
     setCurrentTime((new Date()).toJSON())
     console.log("date:", currentTime);
 
-    // setTimeout(async() => {
-    //   await api.post('/locations', locationData);
-    //   setLocationData({
-    //     x: x,
-    //     y: y,
-    //     z: z, 
-    //     location_started_at: currentTime
-    //   });
-    // }, 1)
+    setTimeout(async() => {
+      await api.post('/locations', locationData);
+      setLocationData({
+        x: mockX,
+        y: mockY,
+        z: mockZ, 
+        location_started_at: currentTime
+      });
+    }, 1)
   }
 
   function handlePermissionGranted() {
@@ -77,7 +98,7 @@ function Accelerometer() {
       })
       .catch(console.error);
   }
-
+  generateRandomNumber();
   return (
     <>
       {permissionGranted ? (
