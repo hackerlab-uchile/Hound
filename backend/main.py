@@ -4,9 +4,23 @@ from datetime import datetime
 import models 
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins= origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -36,20 +50,20 @@ SCANS = []
 
 #Routes
 
-@app.get("/scans")
+@app.get('/scans/get/')
 async def get_scans():
     return SCANS 
 
-@app.post("/scans")
+@app.post('/scans/create')
 def create_scan(network_scan: NetworkScan):
     SCANS.append(network_scan)
     return network_scan
 
-@app.get("/locations")
+@app.get('/locations/get/')
 async def get_locations(db: Session = Depends(get_db)):
     return db.query(models.LocationScans).all()
 
-@app.post("/locations")
+@app.post('/locations/create/')
 def create_location(location_scan: LocationScan, db: Session = Depends(get_db)):
     location_scan_model = models.LocationScans()
     location_scan_model.network_scan_id = location_scan.network_scan_id

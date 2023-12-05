@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import api from "../api/api";
 
 function Accelerometer() {
-
   // mock data //
   const [mockX, setMockX] = useState(null);
   const [mockY, setMockY] = useState(null);
@@ -41,15 +40,26 @@ function Accelerometer() {
   }
   /////// MOCK DATA GENERATOR ///////
 
-  console.log("x, y, z:", mockX, mockY, mockZ);
+  // console.log("x, y, z:", mockX, mockY, mockZ);
 
+  
+  const sendLocationData = async () => {
 
-  const fetchLocationData = async () => {
-    const response = await api.get('/locations')
-    setLocationData(response.data)
-  }
+    try {
+      const response = await fetch('http://localhost:8000/locations/create/', {
+        location_scan: JSON.stringify(locationData),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to send data');
+      }
 
-
+      const responseData = await response.json();
+      console.log('Response from FastAPI:', responseData);
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+  };
+  
   useEffect(() => {
     if (typeof DeviceMotionEvent.requestPermission === "function") {
       DeviceMotionEvent.requestPermission()
@@ -77,6 +87,7 @@ function Accelerometer() {
     setCurrentTime((new Date()).toJSON())
     console.log("date:", currentTime);
 
+    //CAMBIAR MOCK DATA!!
     setTimeout(async() => {
       await api.post('/locations', locationData);
       setLocationData({
@@ -99,6 +110,7 @@ function Accelerometer() {
       .catch(console.error);
   }
   generateRandomNumber();
+  sendLocationData();
   return (
     <>
       {permissionGranted ? (
