@@ -66,8 +66,8 @@ function Accelerometer() {
   
   
   useEffect(() => {
-    if (typeof DeviceOrientationEvent.requestPermission === "function") {
-      DeviceOrientationEvent.requestPermission()
+    if (typeof DeviceMotionEvent.requestPermission === "function") {
+      DeviceMotionEvent.requestPermission()
         .then((permissionState) => {
           if (permissionState === "granted") {
             setPermissionGranted(true);
@@ -77,11 +77,11 @@ function Accelerometer() {
         .catch(console.error);
     } else {
       setPermissionGranted(true);
-      window.addEventListener("deviceorientation", handleMotionEvent);
+      window.addEventListener("devicemotion", handleMotionEvent);
     }
 
     return () => {
-      window.removeEventListener("deviceorientation", handleMotionEvent);
+      window.removeEventListener("devicemotion", handleMotionEvent);
     };
   }, []);
 
@@ -120,11 +120,11 @@ useEffect (() => {
 
   
   function handlePermissionGranted() {
-    DeviceOrientationEvent.requestPermission()
+    DeviceMotionEvent.requestPermission()
       .then((permissionState) => {
         if (permissionState === "granted") {
           setPermissionGranted(true);
-          window.addEventListener("deviceorientation", handleMotionEvent);
+          window.addEventListener("devicemotion", handleMotionEvent);
         }
       })
       .catch(console.error);
