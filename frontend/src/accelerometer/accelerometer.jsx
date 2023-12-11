@@ -36,7 +36,7 @@ function Accelerometer() {
       setMockX(newRandomNumber(1, 10));
       setMockY(newRandomNumber(1, 10));
       setMockZ(newRandomNumber(1, 10));
-    }, 1)
+    }, 5000)
   }
   /////// MOCK DATA GENERATOR ///////
 
@@ -44,10 +44,14 @@ function Accelerometer() {
 
   
   const sendLocationData = async () => {
-
     try {
       const response = await fetch('http://localhost:8000/locations/create/', {
-        location_scan: JSON.stringify(locationData),
+      method: "POST",  
+      body: JSON.stringify(locationData),
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
       });
       if (!response.ok) {
         throw new Error('Failed to send data');
@@ -60,9 +64,10 @@ function Accelerometer() {
     }
   };
   
+  
   useEffect(() => {
-    if (typeof DeviceMotionEvent.requestPermission === "function") {
-      DeviceMotionEvent.requestPermission()
+    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      DeviceOrientationEvent.requestPermission()
         .then((permissionState) => {
           if (permissionState === "granted") {
             setPermissionGranted(true);
@@ -72,11 +77,11 @@ function Accelerometer() {
         .catch(console.error);
     } else {
       setPermissionGranted(true);
-      window.addEventListener("devicemotion", handleMotionEvent);
+      window.addEventListener("deviceorientation", handleMotionEvent);
     }
 
     return () => {
-      window.removeEventListener("devicemotion", handleMotionEvent);
+      window.removeEventListener("deviceorientation", handleMotionEvent);
     };
   }, []);
 
@@ -84,33 +89,48 @@ function Accelerometer() {
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
+    
+}
+
+function handleLocationChanges(){
+  console.log("date:", currentTime);
+  //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber
+  // generateRandomNumber();
+  setLocationData({
+    network_scan_id: 0,
+    // x: mockX,
+    // y: mockY,
+    // z: mockZ,
+    x: x,
+    y: y,
+    z: z,  
+    location_started_at: currentTime
+  });
+  sendLocationData();
+}
+
+useEffect (() => {
     setCurrentTime((new Date()).toJSON())
-    console.log("date:", currentTime);
+    handleLocationChanges();
+  },
+  // [mockX, mockY, mockZ]
+  [x, y, z]
+  );
 
-    //CAMBIAR MOCK DATA!!
-    setTimeout(async() => {
-      await api.post('/locations', locationData);
-      setLocationData({
-        x: mockX,
-        y: mockY,
-        z: mockZ, 
-        location_started_at: currentTime
-      });
-    }, 1)
-  }
 
+  
   function handlePermissionGranted() {
-    DeviceMotionEvent.requestPermission()
+    DeviceOrientationEvent.requestPermission()
       .then((permissionState) => {
         if (permissionState === "granted") {
           setPermissionGranted(true);
-          window.addEventListener("devicemotion", handleMotionEvent);
+          window.addEventListener("deviceorientation", handleMotionEvent);
         }
       })
       .catch(console.error);
   }
-  generateRandomNumber();
-  sendLocationData();
+  
+  
   return (
     <>
       {permissionGranted ? (
@@ -128,9 +148,9 @@ function Accelerometer() {
               This app requires access to device motion and orientation to
               function properly.
             </p>
-            <button className="btn" onClick={handlePermissionGranted}>
+            {/* <button className="btn" onClick={handlePermissionGranted}>
               Grant Permission
-            </button>
+            </button> */}
           </div>
         </div>
       )}
