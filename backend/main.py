@@ -39,9 +39,9 @@ class NetworkScan(BaseModel):
 
 class LocationScan(BaseModel):
     network_scan_id: int = Field(gt=-1, lt=101)
-    x: int = Field(gt=-101, lt=101)
-    y: int = Field(gt=-101, lt=101)
-    z: int = Field(gt=-101, lt=101)
+    x: float = Field(gt=-101, lt=101)
+    y: float = Field(gt=-101, lt=101)
+    z: float = Field(gt=-101, lt=101)
     location_started_at: datetime = None
 
 # Models results

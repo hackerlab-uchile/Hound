@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Float
 from database import Base
 
 # NetworkScan contains scanning instances (envelops the instances of LocationScans and SignalScans) 
@@ -17,7 +17,7 @@ class LocationScans(Base):
 
     id = Column(Integer, primary_key = True, index = True)
     network_scan_id = Column(Integer, index = True)
-    x = Column(Integer)
-    y = Column(Integer)
-    z = Column(Integer)
+    x = Column(Float)
+    y = Column(Float)
+    z = Column(Float)
     location_started_at = Column(DateTime)  
