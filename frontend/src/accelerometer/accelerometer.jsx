@@ -148,9 +148,9 @@ useEffect (() => {
               This app requires access to device motion and orientation to
               function properly.
             </p>
-            {/* <button className="btn" onClick={handlePermissionGranted}>
+            <button className="btn" onClick={handlePermissionGranted}>
               Grant Permission
-            </button> */}
+            </button>
           </div>
         </div>
       )}
