@@ -45,7 +45,7 @@ function Accelerometer() {
   
   const sendLocationData = async () => {
     try {
-      const response = await fetch('https://10.42.0.1:8000/locations/create/', {
+      const response = await fetch('https://10.42.0.1/api/locations/create/', {
       method: "POST",  
       body: JSON.stringify(locationData),
       headers: {
