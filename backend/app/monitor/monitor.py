@@ -2,9 +2,6 @@ import csv
 import time
 import requests
 import json
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-
 
 
 # CSV reading and formatting 
@@ -30,18 +27,32 @@ def array_csv(filename):
     fieldnames_stations = ['Station MAC', 'First time seen', 'Last time seen', 'Power', '# packets', 'BSSID', 'Probed ESSIDs']
     with open(filename, 'r',  newline='') as file:
         reader = csv.reader(file)
-        for row in reader:
+        reader_list = list(reader)
+        index = 0
+        for row in reader_list[2:]:
+            index += 1
+            if(len(row) == 0):
+                break
             #the length of the columns of access points and stations has an error of +-1 
-            if (len(row)>13):
-                #formatting the rows to a dictionary
-                formatted_row = dict(zip(fieldnames_access_points, row))
-                csv_headers.append(formatted_row)
-            elif (len(row)>5):
-                #formatting the rows to a dictionary
-                formatted_row = dict(zip(fieldnames_stations, row))
-                csv_body.append(formatted_row)  
-    return json.dumps(csv_body)
+            #formatting the rows to a dictionary
+            formatted_row = dict(zip(fieldnames_access_points, row))
+            print(formatted_row)
+            # csv_headers.append(formatted_row)
 
+        for row in reader_list[index+2:]:
+            #formatting the rows to a dictionary
+            formatted_row = dict(zip(fieldnames_stations, row))
+            # data = {
+            #     'network_scan_id': 0,
+            #     'station': formatted_row['Station MAC'],
+            #     'pwr': formatted_row['Power'],
+            #     'signal_started_at': formatted_row['Last time seen']
+            # }
+            # csv_body.append(data)  
+            print(formatted_row)
+    return csv_body
+
+array_csv('monitor.csv')
 
 ## Requests
 
@@ -56,27 +67,3 @@ def array_csv(filename):
 #     print(f"Failed to send data. Status code: {response.status_code}, Response: {response.text}")
 
 
-class CsvHandler(FileSystemEventHandler):
-
-    def file_changed(self, event):
-        if event.is_directory:
-            return
-        elif event.event_type == 'modified' and event.src_path.endswith('.csv'):
-            print(f"Detected change in {event.src_path}")
-            process_csv(event.src_path)
-
-# filename:: str (path)
-# Initializating the watchdog observer
-def setup_observer(filename):
-    observer = Observer()
-    event_handler = CsvHandler()
-    observer.schedule(event_handler, path=filename, recursive=True)
-    observer.start()
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
-
-setup_observer(path)
