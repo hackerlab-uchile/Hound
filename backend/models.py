@@ -2,13 +2,23 @@ from sqlalchemy import Column, Integer, String, DateTime, Float
 from database import Base
 
 # NetworkScan contains scanning instances (envelops the instances of LocationScans and SignalScans) 
-class NetworkScan(Base):
+class NetworkScans(Base):
     __tablename__ = "network_scan"
 
     id = Column(Integer, primary_key = True, index = True)
     status = Column(Integer)
     signal_started_at = Column(DateTime) 
     location_started_at = Column(DateTime)  
+
+
+class SignalScans(Base):
+    __tablename__ = "signal_scan"
+
+    id = Column(Integer, primary_key = True, index = True)
+    network_scan_id = Column(Integer, index = True)
+    station = Column(String)
+    pwr = Column(Float)
+    signal_started_at = Column(DateTime) 
 
 
 # Location scans contains the location on a certain time of the device.  

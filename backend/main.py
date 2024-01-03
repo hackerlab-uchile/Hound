@@ -44,6 +44,12 @@ class LocationScan(BaseModel):
     z: float = Field(gt=-101, lt=101)
     location_started_at: datetime = None
 
+class SignalScan(BaseModel):
+    network_scan_id: int = Field(gt=-1, lt=101)
+    station: str = None
+    pwr: float = Field(gt=-101, lt=101)
+    signal_started_at: datetime = None
+
 # Models results
 SCANS = []
 
@@ -68,14 +74,28 @@ def create_location(location_scan: LocationScan, db: Session = Depends(get_db)):
     location_scan_model = models.LocationScans()
     location_scan_model.network_scan_id = location_scan.network_scan_id
     location_scan_model.x = location_scan.x
-    print("x:", location_scan_model.x)
     location_scan_model.y = location_scan.y
     location_scan_model.z = location_scan.z
     location_scan_model.location_started_at = location_scan.location_started_at
-    print("area:", location_scan_model.location_started_at)
-    print ("test", location_scan_model, location_scan)
 
     db.add(location_scan_model)
     db.commit()
 
     return location_scan
+
+@app.post('/signals/create/')
+def create_signal(signal_scan: SignalScan, db: Session = Depends(get_db)):
+    signal_scan_model = models.SignalScans()
+    signal_scan_model.network_scan_id = signal_scan.network_scan_id
+    signal_scan_model.pwr = signal_scan.pwr
+    signal_scan_model.station = signal_scan.station
+    signal_scan_model.signal_started_at = signal_scan.signal_started_at
+
+    db.add(signal_scan_model)
+    db.commit()
+
+    return signal_scan
+
+@app.get('/signals/get/')
+async def get_signals(db: Session = Depends(get_db)):
+    return db.query(models.SignalScans).all()
