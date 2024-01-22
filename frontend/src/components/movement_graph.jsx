@@ -20,10 +20,9 @@ function MovementPlot() {
 
     return (
         <div className="MovementPlot">
-          <h1>Positions</h1>
           <Plot
             data={plotData}
-            layout={{ title: 'Posiciones' }}
+            layout={{ title: 'Positions' }}
           />
         </div>
       ); 
