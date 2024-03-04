@@ -180,7 +180,7 @@ function handleLocationChanges(){
     setTimeElapsed((currentTime-firstInterval)/1000);
   },
   // [mockX, mockY, mockZ]
-  [currentPosition[0], currentPosition[1], currentPosition[2]]
+  [x, y, z]
   );
 
 
@@ -201,9 +201,9 @@ function handleLocationChanges(){
     <>
       {permissionGranted ? (
         <>
-          <p>X: {x}</p>
-          <p>Y: {mockY}</p>
-          <p>Z: {mockZ}</p>
+          <p>X: {currentPosition[0]}</p>
+          <p>Y: {currentPosition[1]}</p>
+          <p>Z: {currentPosition[2]}</p>
         </>
       
       ) : (
