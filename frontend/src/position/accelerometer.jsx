@@ -90,8 +90,8 @@ function Accelerometer() {
   const sendLocationData = async () => {
     try {
       // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
-      // const response = await fetch('https://10.42.0.1/api/locations/create/', {
-      const response = await fetch('http://localhost:8000/locations/create/', {
+      const response = await fetch('https://10.42.0.1/api/locations/create/', {
+      // const response = await fetch('http://localhost:8000/locations/create/', {
       method: "POST",  
       body: JSON.stringify(locationData),
       headers: {
@@ -146,21 +146,21 @@ function Accelerometer() {
   function handleMotionEvent(event) {
     setLastPosition(currentPosition)
     setLastAcceleration(currentAcceleration);
-    setCurrentAcceleration([mockX, mockY, mockZ]);
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
+    setCurrentAcceleration([x, y, z]);
     setAccelerationSum(accelerationSum + currentAcceleration);
     // toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition,1);
 }
 
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
-  generateRandomNumber();
+  // generateRandomNumber();
   setLastPosition(currentPosition);
   setLastAcceleration(currentAcceleration);
   console.log("lastacc", lastAcceleration);
-  setCurrentAcceleration([mockX, mockY, mockZ]);
+  setCurrentAcceleration([x, y, z]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
   setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
   setLocationData({
@@ -179,8 +179,8 @@ function handleLocationChanges(){
     handleLocationChanges();
     setTimeElapsed((currentTime-firstInterval)/1000);
   },
-  [mockX, mockY, mockZ]
-  // [x, y, z]
+  // [mockX, mockY, mockZ]
+  [currentPosition[0], currentPosition[1], currentPosition[2]]
   );
 
 
@@ -201,7 +201,7 @@ function handleLocationChanges(){
     <>
       {permissionGranted ? (
         <>
-          <p>X: {mockX}</p>
+          <p>X: {x}</p>
           <p>Y: {mockY}</p>
           <p>Z: {mockZ}</p>
         </>
