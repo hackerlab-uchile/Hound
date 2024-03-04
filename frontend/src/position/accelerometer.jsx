@@ -24,6 +24,7 @@ function Accelerometer() {
 
   const [firstInterval, setFirstInterval] = useState(new Date());
   const [currentTime, setCurrentTime] = useState(new Date()); 
+  const [currentNetworkScanId, setCurrentNetworkScanId] = useState(null);
   const [networkScan, setNetworkScan] = useState({
     status: '',
     signal_started_at: '',
@@ -36,6 +37,8 @@ function Accelerometer() {
     z: '',
     location_started_at: ''
   });
+
+  ////////////General use functions/////////////
 
   //multiplication of arrays with constants
   function mult(arr, constant){
@@ -54,6 +57,18 @@ function Accelerometer() {
     return s;
   }
 
+  ////////// Endpoints connections ///////////
+
+  // Gets the data of the last Network scan id and sets the current nw scan
+  useEffect(() => {
+    const fetchLastNetworkScanId = async () => {
+      const response = await fetch('http://localhost:8000/networks/get_last_id/');
+      const responseData = await response.json();
+      setCurrentNetworkScanId(responseData+1);
+    };
+    fetchLastNetworkScanId();
+    
+  }, []);
 
   /////// MOCK DATA GENERATOR ///////
   function newRandomNumber(min, max){
@@ -71,7 +86,7 @@ function Accelerometer() {
 
   // console.log("x, y, z:", mockX, mockY, mockZ);
 
-  
+  // Sends the location data to the fastapi endpoints
   const sendLocationData = async () => {
     try {
       // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
@@ -95,6 +110,7 @@ function Accelerometer() {
     }
   };
   
+
   //Integrating the solution for displacement offered in the paper 'Deriving Displacement from a 3 axis Accelerometer'
   // https://cris.brighton.ac.uk/ws/portalfiles/portal/219655/Displacement+from+Accelerometer+(1).pdf
 
@@ -148,7 +164,7 @@ function handleLocationChanges(){
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
   setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
   setLocationData({
-    network_scan_id: 0,
+    network_scan_id: currentNetworkScanId,
     x: currentPosition[0],
     y: currentPosition[1],
     z: currentPosition[2],
