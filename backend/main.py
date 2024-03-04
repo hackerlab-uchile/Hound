@@ -1,10 +1,14 @@
+import models 
+import scan_manager
+
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, Field
 from datetime import datetime
-import models 
-from database import engine, SessionLocal
+from database import engine_location, engine_signal, engine_network, SessionLocalLocation, SessionLocalSignal, SessionLocalNetwork
 from sqlalchemy.orm import Session
+from sqlalchemy import select, desc
 from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
@@ -21,11 +25,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# checking existence of tables
+models.Base.metadata.create_all(bind=engine_location)
+models.Base.metadata.create_all(bind=engine_signal)
+models.Base.metadata.create_all(bind=engine_network)
 
-models.Base.metadata.create_all(bind=engine)
+# database getters
+def get_locations_db():
+    db = SessionLocalLocation
+    try:
+        yield db
+    finally:
+        db.close()
 
-def get_db():
-    db = SessionLocal
+def get_signals_db():
+    db = SessionLocalSignal
+    try:
+        yield db
+    finally:
+        db.close()
+
+def get_networks_db():
+    db = SessionLocalNetwork
     try:
         yield db
     finally:
@@ -33,6 +54,7 @@ def get_db():
 
 # Models
 class NetworkScan(BaseModel):
+    
     status: int = Field(gt=-1, lt=101)
     signal_started_at: datetime = None
     location_started_at: datetime = None
@@ -42,60 +64,88 @@ class LocationScan(BaseModel):
     x: float = Field(gt=-101, lt=101)
     y: float = Field(gt=-101, lt=101)
     z: float = Field(gt=-101, lt=101)
-    location_started_at: datetime = None
 
 class SignalScan(BaseModel):
     network_scan_id: int = Field(gt=-1, lt=101)
     station: str = None
     pwr: float = Field(gt=-101, lt=101)
-    signal_started_at: datetime = None
-
-# Models results
-SCANS = []
-
 
 #Routes
 
-@app.get('/scans/get/')
-async def get_scans():
-    return SCANS 
 
-@app.post('/scans/create')
-def create_scan(network_scan: NetworkScan):
-    SCANS.append(network_scan)
+# DB creators
+@app.post('/networks/create/')
+def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks_db)):
+    network_scan_model = models.NetworkScans()
+    network_scan_model.status = network_scan.status
+    network_scan_model.signal_started_at = network_scan.signal_started_at
+    network_scan_model.location_started_at = network_scan.location_started_at
+
+    db.add(network_scan_model)
+    db.commit()
     return network_scan
 
-@app.get('/locations/get/')
-async def get_locations(db: Session = Depends(get_db)):
-    return db.query(models.LocationScans).all()
-
 @app.post('/locations/create/')
-def create_location(location_scan: LocationScan, db: Session = Depends(get_db)):
+def create_location(location_scan: LocationScan, db: Session = Depends(get_locations_db)):
     location_scan_model = models.LocationScans()
     location_scan_model.network_scan_id = location_scan.network_scan_id
     location_scan_model.x = location_scan.x
     location_scan_model.y = location_scan.y
     location_scan_model.z = location_scan.z
-    location_scan_model.location_started_at = location_scan.location_started_at
+    # location_scan_model.location_started_at = location_scan.location_started_at
 
     db.add(location_scan_model)
     db.commit()
-
     return location_scan
 
 @app.post('/signals/create/')
-def create_signal(signal_scan: SignalScan, db: Session = Depends(get_db)):
+def create_signal(signal_scan: SignalScan, db: Session = Depends(get_signals_db)):
     signal_scan_model = models.SignalScans()
     signal_scan_model.network_scan_id = signal_scan.network_scan_id
     signal_scan_model.pwr = signal_scan.pwr
     signal_scan_model.station = signal_scan.station
-    signal_scan_model.signal_started_at = signal_scan.signal_started_at
+    # signal_scan_model.signal_started_at = signal_scan.signal_started_at
 
     db.add(signal_scan_model)
     db.commit()
-
     return signal_scan
 
+
+#getters
+@app.get('/networks/get/')
+async def get_networks(db: Session = Depends(get_networks_db)):
+    return db.query(models.NetworkScans).all()
+
+@app.get('/locations/get/')
+async def get_locations(db: Session = Depends(get_locations_db)):
+    return db.query(models.LocationScans).all()
+
 @app.get('/signals/get/')
-async def get_signals(db: Session = Depends(get_db)):
+async def get_signals(db: Session = Depends(get_signals_db)):
     return db.query(models.SignalScans).all()
+
+
+# Returns the last id on the network scan
+@app.get('/networks/get_last_id/')
+async def get_last_network_id(db: Session = Depends(get_networks_db)):
+    last_id = db.query(models.NetworkScans).order_by(desc(models.NetworkScans.id)).limit(1)
+    last_item_id = db.execute(last_id).scalar()
+    return last_item_id.id
+
+
+# getters by network id
+
+@app.get('/locations/get_by_network_id/{network_id}')
+async def get_location_by_instance(network_id: int, db: Session = Depends(get_locations_db)):
+    locations = db.query(models.LocationScans).filter(models.LocationScans.network_scan_id == network_id).all()
+    return locations
+
+@app.get('/signals/get_by_network_id/{network_id}')
+async def get_signal_by_instance(network_id: int, db: Session = Depends(get_signals_db)):
+    signals = db.query(models.SignalScans).filter(models.SignalScans.network_scan_id == network_id).all()
+    return signals
+
+# Function dedicated to send the start instruction to the other 
+@app.post('/start_signal_scan')
+def start_scanning():
+    scan_manager.run_script()
