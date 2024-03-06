@@ -34,7 +34,7 @@ function Accelerometer() {
     network_scan_id: '',
     x: '',
     y: '',
-    z: '',
+    z: ''
   });
 
   ////////////General use functions/////////////
@@ -196,7 +196,10 @@ function handleLocationChanges(){
       .catch(console.error);
   }
   
-  console.log('current pos:', currentPosition)
+  console.log('current pos:', currentPosition);
+  console.log('current acc:', currentAcceleration);
+  console.log('loc data:', locationData);
+  
   return (
     <>
       {permissionGranted ? (
