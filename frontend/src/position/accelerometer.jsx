@@ -61,7 +61,8 @@ function Accelerometer() {
   // Gets the data of the last Network scan id and sets the current nw scan
   useEffect(() => {
     const fetchLastNetworkScanId = async () => {
-      const response = await fetch('http://localhost:8000/networks/get_last_id/');
+      // const response = await fetch('http://localhost:8000/networks/get_last_id/');
+      const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
       const responseData = await response.json();
       setCurrentNetworkScanId(responseData+1);
     };
