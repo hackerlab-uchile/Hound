@@ -201,9 +201,9 @@ function handleLocationChanges(){
     <>
       {permissionGranted ? (
         <>
-          <p>X: {currentPosition[0]}</p>
-          <p>Y: {currentPosition[1]}</p>
-          <p>Z: {currentPosition[2]}</p>
+          <p>X: {x}</p>
+          <p>Y: {y}</p>
+          <p>Z: {z}</p>
         </>
       
       ) : (
