@@ -35,7 +35,6 @@ function Accelerometer() {
     x: '',
     y: '',
     z: '',
-    location_started_at: ''
   });
 
   ////////////General use functions/////////////
@@ -196,7 +195,7 @@ function handleLocationChanges(){
       .catch(console.error);
   }
   
-  
+  console.log('current pos:', currentPosition)
   return (
     <>
       {permissionGranted ? (
