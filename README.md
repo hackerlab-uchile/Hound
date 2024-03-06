@@ -19,13 +19,13 @@ If you want to set up your own hotspot use the following configuration
  nmcli con modify <Name_of_connection> 802-11-wireless.band bg
  nmcli con modify <Name_of_connection> 802-11-wireless.channel 1
  nmcli con modify <Name_of_connection> 802-11-wireless-security.key-mgmt wpa-psk
- nmcli con modify <Name_of_connection> 802-11-wireless-security.psk 1234567890
- nmcli con modify <Name_of_connection> ipv4.addr 10.0.0.1/24
+ nmcli con modify <Name_of_connection> 802-11-wireless-security.psk <password>
+ nmcli con modify <Name_of_connection> ipv4.addr 10.42.0.1
  nmcli con modify <Name_of_connection> ipv4.method shared
  nmcli con up <Name_of_connection>
 ```
 
-We do it like this to avoid security measures that requires certain types of authentication that mobile devices cannot provide. The authentication doesnt work otherwise. 
+We do it like this to avoid security measures that requires certain types of authentication that mobile devices cannot provide. The authentication doesnt work otherwise. Other reason to do this is that doing this we set the ipv4 address to the required one by Caddy (`10.42.0.1`). 
 
 ## Usage
 The aplication needs a frontend and a backend running simultaneosuly. To achieve this:
