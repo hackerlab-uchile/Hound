@@ -169,7 +169,7 @@ function handleLocationChanges(){
     y: currentPosition[1],
     z: currentPosition[2]
   });
-  sendLocationData();
+  // sendLocationData();
 }
 
   useEffect (() => {
