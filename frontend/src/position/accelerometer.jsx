@@ -167,8 +167,7 @@ function handleLocationChanges(){
     network_scan_id: currentNetworkScanId,
     x: currentPosition[0],
     y: currentPosition[1],
-    z: currentPosition[2],
-    location_started_at: currentTime.toJSON()
+    z: currentPosition[2]
   });
   sendLocationData();
 }
@@ -199,7 +198,6 @@ function handleLocationChanges(){
   console.log('current pos:', currentPosition);
   console.log('current acc:', currentAcceleration);
   console.log('loc data:', locationData);
-  
   return (
     <>
       {permissionGranted ? (
