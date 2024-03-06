@@ -48,6 +48,6 @@ uvicorn main:app --reload
 
 - For backend on RPI
 ```
-uvicorn main:app --reload --host 0.0.0.0 --root-path /api/
+uvicorn main:app --reload --host 0.0.0.0 
 ```
 ## Usage
