@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import api from "../api/api";
 
 function Accelerometer() {
@@ -31,6 +31,8 @@ function Accelerometer() {
     y: '',
     z: ''
   });
+
+
 
   ////////////General use functions/////////////
 
@@ -171,8 +173,8 @@ function handleLocationChanges(){
   useEffect (() => {
     setFirstInterval(currentTime);
     setCurrentTime(new Date());
-    handleLocationChanges();
-    setTimeElapsed((currentTime-firstInterval)/1000);
+    // handleLocationChanges();
+    setTimeElapsed((currentTime - firstInterval)/1000);
   },
   // [mockX, mockY, mockZ]
   [x, y, z]
