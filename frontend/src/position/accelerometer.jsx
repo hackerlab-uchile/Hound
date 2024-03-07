@@ -143,6 +143,10 @@ function Accelerometer() {
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
+    setFirstInterval(currentTime);
+    setCurrentTime(Date.now());
+    setTimeElapsed((currentTime - firstInterval)/1000);
+    console.log(currentTime, firstInterval);
   }
 
 
@@ -167,9 +171,6 @@ function handleLocationChanges(){
 
   //everytime the acceleration changes we get the interval to calculate each of the positions
   useEffect (() => {
-    setFirstInterval(currentTime);
-    setCurrentTime(Date.now());
-    setTimeElapsed((currentTime - firstInterval)/1000);
     console.log("current Time:", currentTime, "former time", firstInterval);
     handleLocationChanges();
   },
