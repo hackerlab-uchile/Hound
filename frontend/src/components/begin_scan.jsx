@@ -6,6 +6,7 @@ import StopScan from './stop_scan'
 
 const Button = styled.button`
 padding: 15px;
+margin: auto;
 color: #ad77e0;
 display: ${props => props.visibility? 'inline': 'none'}
 `;

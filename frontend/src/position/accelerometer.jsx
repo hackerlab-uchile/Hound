@@ -129,30 +129,31 @@ function Accelerometer() {
         .then((permissionState) => {
           if (permissionState === "granted") {
             setPermissionGranted(true);
-            window.addEventListener("devicemotion", handleMotionEvent);
+            window.addEventListener("devicemotion", handleMotionEvent, true);
           }
         })
         .catch(console.error);
     } else {
       setPermissionGranted(true);
-      window.addEventListener("devicemotion", handleMotionEvent);
+      window.addEventListener("devicemotion", handleMotionEvent, true);
     }
 
     return () => {
-      window.removeEventListener("devicemotion", handleMotionEvent);
+      window.removeEventListener("devicemotion", handleMotionEvent, true);
     };
   }, []);
 
   function handleMotionEvent(event) {
-    setLastPosition(currentPosition)
-    setLastAcceleration(currentAcceleration);
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
-    setCurrentAcceleration([x, y, z]);
-    setAccelerationSum(accelerationSum + currentAcceleration);
-    // toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition,1);
 }
+
+setLastPosition(currentPosition)
+setLastAcceleration(currentAcceleration);
+setCurrentAcceleration([x, y, z]);
+setAccelerationSum(accelerationSum + currentAcceleration);
+    // toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition,1);
 
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
@@ -172,6 +173,7 @@ function handleLocationChanges(){
   // sendLocationData();
 }
 
+  //everytime the acceleration changes we get the interval to calculate each of the positions
   useEffect (() => {
     setFirstInterval(currentTime);
     setCurrentTime(new Date());
@@ -189,7 +191,7 @@ function handleLocationChanges(){
       .then((permissionState) => {
         if (permissionState === "granted") {
           setPermissionGranted(true);
-          window.addEventListener("devicemotion", handleMotionEvent);
+          window.addEventListener("devicemotion", handleMotionEvent, true);
         }
       })
       .catch(console.error);
