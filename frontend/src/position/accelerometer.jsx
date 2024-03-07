@@ -143,7 +143,7 @@ function Accelerometer() {
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
-    handleLocationChanges();
+    
   }
 
 
@@ -151,10 +151,6 @@ function Accelerometer() {
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
-  setFirstInterval(currentTime);
-  setCurrentTime(Date.now());
-  setTimeElapsed((currentTime - firstInterval)/1000);
-  console.log("current Time:", currentTime, "former time", firstInterval);
   setLastPosition(currentPosition);
   setLastAcceleration(currentAcceleration);
   setCurrentAcceleration([x, y, z]);
@@ -170,16 +166,17 @@ function handleLocationChanges(){
   // sendLocationData();
 }
 
-  // //everytime the acceleration changes we get the interval to calculate each of the positions
-  // useEffect (() => {
-  //   setFirstInterval(currentTime);
-  //   setCurrentTime(new Date());
-  //   // handleLocationChanges();
-  //   setTimeElapsed((currentTime - firstInterval)/1000);
-  // },
-  // // [mockX, mockY, mockZ]
-  // [x, y, z]
-  // );
+  //everytime the acceleration changes we get the interval to calculate each of the positions
+  useEffect (() => {
+    setFirstInterval(currentTime);
+    setCurrentTime(Date.now());
+    setTimeElapsed((currentTime - firstInterval)/1000);
+    console.log("current Time:", currentTime, "former time", firstInterval);
+    handleLocationChanges();
+  },
+  // [mockX, mockY, mockZ]
+  [x, y, z]
+  );
 
 
   
