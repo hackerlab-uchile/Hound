@@ -154,11 +154,13 @@ function handleLocationChanges(){
   setFirstInterval(currentTime);
   setCurrentTime(new Date());
   setTimeElapsed((currentTime - firstInterval)/1000);
+  console.log("current Time:", currentTime, "former time", firstInterval);
   setLastPosition(currentPosition);
   setLastAcceleration(currentAcceleration);
   setCurrentAcceleration([x, y, z]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
   setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
+  console.log("position", currentPosition);
   setLocationData({
     network_scan_id: currentNetworkScanId,
     x: currentPosition[0],
