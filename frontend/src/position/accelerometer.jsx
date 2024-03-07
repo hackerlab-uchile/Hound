@@ -25,11 +25,6 @@ function Accelerometer() {
   const [firstInterval, setFirstInterval] = useState(new Date());
   const [currentTime, setCurrentTime] = useState(new Date()); 
   const [currentNetworkScanId, setCurrentNetworkScanId] = useState(null);
-  const [networkScan, setNetworkScan] = useState({
-    status: '',
-    signal_started_at: '',
-    location_started_at: ''
-  });
   const [locationData, setLocationData] = useState({
     network_scan_id: '',
     x: '',
@@ -44,7 +39,6 @@ function Accelerometer() {
     const multiplication = arr.map((x) => constant * x);
     return multiplication;
   }
-  console.log("multiplication", mult([1,2,3], 2));
 
   //addition of 3 dimensional arrays
   // usage example: sum3d(...[1,2,3], ...[1,2,3]) -> [2,4,6]
@@ -129,17 +123,17 @@ function Accelerometer() {
         .then((permissionState) => {
           if (permissionState === "granted") {
             setPermissionGranted(true);
-            window.addEventListener("devicemotion", handleMotionEvent, true);
+            window.addEventListener("devicemotion", handleMotionEvent);
           }
         })
         .catch(console.error);
     } else {
       setPermissionGranted(true);
-      window.addEventListener("devicemotion", handleMotionEvent, true);
+      window.addEventListener("devicemotion", handleMotionEvent);
     }
 
     return () => {
-      window.removeEventListener("devicemotion", handleMotionEvent, true);
+      window.removeEventListener("devicemotion", handleMotionEvent);
     };
   }, []);
 
@@ -147,20 +141,20 @@ function Accelerometer() {
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
+    setLastPosition(currentPosition)
+    setLastAcceleration(currentAcceleration);
+    setCurrentAcceleration([x, y, z]);
+    setAccelerationSum(accelerationSum + currentAcceleration);
+    toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition,1);
 }
 
-setLastPosition(currentPosition)
-setLastAcceleration(currentAcceleration);
-setCurrentAcceleration([x, y, z]);
-setAccelerationSum(accelerationSum + currentAcceleration);
-    // toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition,1);
+
 
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
   setLastPosition(currentPosition);
   setLastAcceleration(currentAcceleration);
-  console.log("lastacc", lastAcceleration);
   setCurrentAcceleration([x, y, z]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
   setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
@@ -191,15 +185,12 @@ function handleLocationChanges(){
       .then((permissionState) => {
         if (permissionState === "granted") {
           setPermissionGranted(true);
-          window.addEventListener("devicemotion", handleMotionEvent, true);
+          window.addEventListener("devicemotion", handleMotionEvent);
         }
       })
       .catch(console.error);
   }
   
-  console.log('current pos:', currentPosition);
-  console.log('current acc:', currentAcceleration);
-  console.log('loc data:', locationData);
   return (
     <>
       {permissionGranted ? (
