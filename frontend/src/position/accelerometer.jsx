@@ -22,8 +22,8 @@ function Accelerometer() {
 
   const [currentPosition, setCurrentPosition] = useState([0,0,0]);
 
-  const [firstInterval, setFirstInterval] = useState(new Date());
-  const [currentTime, setCurrentTime] = useState(new Date()); 
+  const [firstInterval, setFirstInterval] = useState(Date.now());
+  const [currentTime, setCurrentTime] = useState(Date.now()); 
   const [currentNetworkScanId, setCurrentNetworkScanId] = useState(null);
   const [locationData, setLocationData] = useState({
     network_scan_id: '',
@@ -152,7 +152,7 @@ function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
   setFirstInterval(currentTime);
-  setCurrentTime(new Date());
+  setCurrentTime(Date.now());
   setTimeElapsed((currentTime - firstInterval)/1000);
   console.log("current Time:", currentTime, "former time", firstInterval);
   setLastPosition(currentPosition);
