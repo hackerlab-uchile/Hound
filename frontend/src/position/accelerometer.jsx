@@ -52,17 +52,17 @@ function Accelerometer() {
 
   ////////// Endpoints connections ///////////
 
-  // Gets the data of the last Network scan id and sets the current nw scan
-  useEffect(() => {
-    const fetchLastNetworkScanId = async () => {
-      // const response = await fetch('http://localhost:8000/networks/get_last_id/');
-      const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
-      const responseData = await response.json();
-      setCurrentNetworkScanId(responseData+1);
-    };
-    fetchLastNetworkScanId();
+  // // Gets the data of the last Network scan id and sets the current nw scan
+  // useEffect(() => {
+  //   const fetchLastNetworkScanId = async () => {
+  //     // const response = await fetch('http://localhost:8000/networks/get_last_id/');
+  //     const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
+  //     const responseData = await response.json();
+  //     setCurrentNetworkScanId(responseData+1);
+  //   };
+  //   fetchLastNetworkScanId();
     
-  }, []);
+  // }, []);
 
   /////// MOCK DATA GENERATOR ///////
   function newRandomNumber(min, max){
@@ -141,11 +141,11 @@ function Accelerometer() {
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
-    setLastPosition(currentPosition)
-    setLastAcceleration(currentAcceleration);
-    setCurrentAcceleration([x, y, z]);
-    setAccelerationSum(accelerationSum + currentAcceleration);
-    toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition,1);
+    // setLastPosition(currentPosition);
+    // setLastAcceleration(currentAcceleration);
+    // setCurrentAcceleration([x, y, z]);
+    // setAccelerationSum(accelerationSum + currentAcceleration);
+    // toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition,1);
 }
 
 
