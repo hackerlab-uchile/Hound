@@ -141,7 +141,6 @@ function Accelerometer() {
 
   function roundAcc(acc){
     if ((acc !== undefined) ||(acc !== null)){
-      console.log('ROUNDED', parseFloat(acc.toFixed(1)));
       return(parseFloat(acc.toFixed(1)));
     }
     else{
@@ -203,9 +202,9 @@ function handleLocationChanges(){
     <>
       {permissionGranted ? (
         <>
-          <p>X: {x}</p>
-          <p>Y: {y}</p>
-          <p>Z: {z}</p>
+          <p>X: {currentPosition[0]}</p>
+          <p>Y: {currentPosition[1]}</p>
+          <p>Z: {currentPosition[2]}</p>
         </>
       
       ) : (
