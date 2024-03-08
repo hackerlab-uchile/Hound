@@ -140,7 +140,7 @@ function Accelerometer() {
   }, []);
 
   function roundAcc(acc){
-    if (acc !== undefined){
+    if ((acc !== undefined) ||(acc !== null)){
       return(acc.toFixed(1));
     }
     else{
