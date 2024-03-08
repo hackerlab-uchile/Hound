@@ -54,17 +54,17 @@ function Accelerometer() {
 
   ////////// Endpoints connections ///////////
 
-  // // Gets the data of the last Network scan id and sets the current nw scan
-  // useEffect(() => {
-  //   const fetchLastNetworkScanId = async () => {
-  //     // const response = await fetch('http://localhost:8000/networks/get_last_id/');
-  //     const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
-  //     const responseData = await response.json();
-  //     setCurrentNetworkScanId(responseData+1);
-  //   };
-  //   fetchLastNetworkScanId();
+  // Gets the data of the last Network scan id and sets the current nw scan
+  useEffect(() => {
+    const fetchLastNetworkScanId = async () => {
+      // const response = await fetch('http://localhost:8000/networks/get_last_id/');
+      const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
+      const responseData = await response.json();
+      setCurrentNetworkScanId(responseData+1);
+    };
+    fetchLastNetworkScanId();
     
-  // }, []);
+  }, []);
 
   /////// MOCK DATA GENERATOR ///////
   function newRandomNumber(min, max){
@@ -141,7 +141,7 @@ function Accelerometer() {
 
   function roundAcc(acc){
     if ((acc !== undefined) ||(acc !== null)){
-      return(parseFloat(acc.toFixed(1)));
+      return(parseFloat(acc.toFixed(0)));
     }
     else{
       return(0);
@@ -174,7 +174,7 @@ function handleLocationChanges(){
     y: currentPosition[1],
     z: currentPosition[2]
   });
-  // sendLocationData();
+  sendLocationData();
 }
 
   //everytime the acceleration changes we get the interval to calculate each of the positions
