@@ -143,7 +143,7 @@ function Accelerometer() {
     setX(event.acceleration.x);
     setY(event.acceleration.y);
     setZ(event.acceleration.z);
-    setFirstInterval(currentTime);
+    setFirstInterval(currentTime.toFixed(2));
     setCurrentTime(Date.now());
     setTimeElapsed((currentTime - firstInterval)/1000);
     console.log(currentTime, firstInterval);
@@ -154,11 +154,12 @@ function Accelerometer() {
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
-  setLastPosition(currentPosition);
+  let lastPos = [currentPosition[0].toFixed(1), currentPosition[1].toFixed(1), currentPosition[2].toFixed(1)];
+  setLastPosition(lastPos);
   setLastAcceleration(currentAcceleration);
-  setCurrentAcceleration([x, y, z]);
+  setCurrentAcceleration([x.toFixed(1), y.toFixed(1), z.toFixed(1)]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
-  setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed).toFixed(2));
+  setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
   console.log("position", currentPosition);
   setLocationData({
     network_scan_id: currentNetworkScanId,
