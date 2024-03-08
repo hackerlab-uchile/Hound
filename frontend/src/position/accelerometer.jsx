@@ -113,7 +113,6 @@ function Accelerometer() {
   //the function receives the acceleration at that point on x, y and z, provided by the accelerometer and the last calculated position both as an array
   // acc_sum: the sum of all the accelerations minus the last one
   function toPosition(current_acc, last_acc, acc_sum, last_pos, time_elapsed) {
-    console.log('current_acc', current_acc);
     const current_pos = sum3d(...mult(sum3d(...mult(current_acc, 1/2), ...mult(last_acc, 3/2), ...mult(acc_sum, 2)), (time_elapsed^2)/2), ...last_pos);
     return(current_pos);
   }
@@ -142,7 +141,8 @@ function Accelerometer() {
 
   function roundAcc(acc){
     if ((acc !== undefined) ||(acc !== null)){
-      return(acc.toFixed(1));
+      console.log('ROUNDED', parseFloat(acc.toFixed(1)));
+      return(parseFloat(acc.toFixed(1)));
     }
     else{
       return(0);
