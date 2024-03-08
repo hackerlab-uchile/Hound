@@ -144,7 +144,7 @@ function Accelerometer() {
       return(acc.toFixed(1));
     }
     else{
-      return(0)
+      return(0);
     }
   }
 
