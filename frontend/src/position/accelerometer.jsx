@@ -139,10 +139,19 @@ function Accelerometer() {
     };
   }, []);
 
+  function roundAcc(acc){
+    if (acc !== undefined){
+      return(acc.toFixed(1));
+    }
+    else{
+      return(0)
+    }
+  }
+
   function handleMotionEvent(event) {
-    setX(event.acceleration.x);
-    setY(event.acceleration.y);
-    setZ(event.acceleration.z);
+    setX(roundAcc(event.acceleration.x));
+    setY(roundAcc(event.acceleration.y));
+    setZ(roundAcc(event.acceleration.z));
     setFirstInterval(currentTime);
     setCurrentTime(Date.now());
     setTimeElapsed((currentTime - firstInterval)/1000);
