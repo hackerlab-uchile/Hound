@@ -140,9 +140,9 @@ function Accelerometer() {
   }, []);
 
   function handleMotionEvent(event) {
-    setX((event.acceleration.x != null)? event.acceleration.x.toFixed(1): 0);
-    setY((event.acceleration.y != null)? event.acceleration.y.toFixed(1): 0);
-    setZ((event.acceleration.z != null)? event.acceleration.z.toFixed(1): 0);
+    setX(event.acceleration.x != null);
+    setY(event.acceleration.y != null);
+    setZ(event.acceleration.z != null);
     setFirstInterval(currentTime);
     setCurrentTime(Date.now());
     setTimeElapsed((currentTime - firstInterval)/1000);
