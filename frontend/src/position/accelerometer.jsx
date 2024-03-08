@@ -140,9 +140,9 @@ function Accelerometer() {
   }, []);
 
   function handleMotionEvent(event) {
-    setX(event.acceleration.x);
-    setY(event.acceleration.y);
-    setZ(event.acceleration.z);
+    setX((event.acceleration.x).toFixed(1));
+    setY((event.acceleration.y).toFixed(1));
+    setZ((event.acceleration.z).toFixed(1));
     setFirstInterval(currentTime.toFixed(2));
     setCurrentTime(Date.now());
     setTimeElapsed((currentTime - firstInterval)/1000);
@@ -157,7 +157,7 @@ function handleLocationChanges(){
   let lastPos = [currentPosition[0].toFixed(1), currentPosition[1].toFixed(1), currentPosition[2].toFixed(1)];
   setLastPosition(lastPos);
   setLastAcceleration(currentAcceleration);
-  setCurrentAcceleration([x.toFixed(1), y.toFixed(1), z.toFixed(1)]);
+  setCurrentAcceleration([x, y, z]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
   setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
   console.log("position", currentPosition);
