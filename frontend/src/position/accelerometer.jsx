@@ -9,9 +9,9 @@ function Accelerometer() {
   // mock data //
 
   const [permissionGranted, setPermissionGranted] = useState(false);
-  const [x, setX] = useState(null);
-  const [y, setY] = useState(null);
-  const [z, setZ] = useState(null);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+  const [z, setZ] = useState(0);
 
   // data made to calculate positions, all of them are trouples
   const [currentAcceleration, setCurrentAcceleration] = useState([0,0,0]);
