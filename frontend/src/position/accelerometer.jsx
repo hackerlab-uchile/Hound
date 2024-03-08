@@ -158,7 +158,7 @@ function handleLocationChanges(){
   setLastAcceleration(currentAcceleration);
   setCurrentAcceleration([x, y, z]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
-  setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
+  setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed).toFixed(2));
   console.log("position", currentPosition);
   setLocationData({
     network_scan_id: currentNetworkScanId,
