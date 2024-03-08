@@ -140,13 +140,12 @@ function Accelerometer() {
   }, []);
 
   function handleMotionEvent(event) {
-    setX((event.acceleration.x));
-    setY((event.acceleration.y));
-    setZ((event.acceleration.z));
+    setX(event.acceleration.x.toFixed(2));
+    setY(event.acceleration.y.toFixed(2));
+    setZ(event.acceleration.z.toFixed(2));
     setFirstInterval(currentTime);
     setCurrentTime(Date.now());
     setTimeElapsed((currentTime - firstInterval)/1000);
-    console.log(currentTime, firstInterval);
   }
 
 
@@ -154,10 +153,9 @@ function Accelerometer() {
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
-  // let lastPos = [currentPosition[0].toFixed(1), currentPosition[1].toFixed(1), currentPosition[2].toFixed(1)];
   setLastPosition(currentPosition);
   setLastAcceleration(currentAcceleration);
-  setCurrentAcceleration([x.toFixed(1), y.toFixed(1), z.toFixed(1)]);
+  setCurrentAcceleration([x, y, z]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
   setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
   console.log("position", currentPosition);
@@ -172,7 +170,6 @@ function handleLocationChanges(){
 
   //everytime the acceleration changes we get the interval to calculate each of the positions
   useEffect (() => {
-    console.log("current Time:", currentTime, "former time", firstInterval);
     handleLocationChanges();
   },
   // [mockX, mockY, mockZ]
@@ -196,9 +193,9 @@ function handleLocationChanges(){
     <>
       {permissionGranted ? (
         <>
-          <p>X: {currentPosition[0]}</p>
-          <p>Y: {currentPosition[1]}</p>
-          <p>Z: {currentPosition[2]}</p>
+          <p>X: {x}</p>
+          <p>Y: {y}</p>
+          <p>Z: {z}</p>
         </>
       
       ) : (
