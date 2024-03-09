@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import api from './api/api'
 import './App.css';
 
 import BeginScan from './components/begin_scan';
-import Accelerometer from './position/accelerometer';
+// import Accelerometer from './position/accelerometer';
 
 
 const App = () => {

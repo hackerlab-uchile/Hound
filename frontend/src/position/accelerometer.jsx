@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useReducer } from "react";
-import api from "../api/api";
+import React, { useEffect, useState } from "react";
+import { toPosition, sum3d } from './posCalculation';
+// import { sendLocationData } from './endpoints';
 
 function Accelerometer() {
   // mock data //
-  const [mockX, setMockX] = useState(null);
-  const [mockY, setMockY] = useState(null);
-  const [mockZ, setMockZ] = useState(null);
+  // const [mockX, setMockX] = useState(null);
+  // const [mockY, setMockY] = useState(null);
+  // const [mockZ, setMockZ] = useState(null);
   // mock data //
 
+  // accelerometer consts
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
@@ -32,28 +34,7 @@ function Accelerometer() {
     z: ''
   });
 
-
-
-  ////////////General use functions/////////////
-
-  //multiplication of arrays with constants
-  function mult(arr, constant){
-    const multiplication = arr.map((x) => constant * x);
-    return multiplication;
-  }
-
-  //addition of 3 dimensional arrays
-  // usage example: sum3d(...[1,2,3], ...[1,2,3]) -> [2,4,6]
-  function sum3d(...args){
-    let s = [0,0,0];
-    for (let i = 0; i<args.length; i++) {
-      s[i%3] += args[i];
-    }
-    return s;
-  }
-
-  ////////// Endpoints connections ///////////
-
+  // gets the network scan id to assign the new location instance to a new network scan. 
   // Gets the data of the last Network scan id and sets the current nw scan
   useEffect(() => {
     const fetchLastNetworkScanId = async () => {
@@ -65,59 +46,6 @@ function Accelerometer() {
     fetchLastNetworkScanId();
     
   }, []);
-
-  /////// MOCK DATA GENERATOR ///////
-  function newRandomNumber(min, max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;  
-  }
-
-  function generateRandomNumber(){
-    setTimeout(() => {
-      setMockX(newRandomNumber(-10, 10));
-      setMockY(newRandomNumber(-10, 10));
-      setMockZ(newRandomNumber(-10, 10));
-    }, 5000)
-  }
-  /////// MOCK DATA GENERATOR ///////
-
-  // console.log("x, y, z:", mockX, mockY, mockZ);
-
-  // Sends the location data to the fastapi endpoints
-  const sendLocationData = async () => {
-    try {
-      // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
-      const response = await fetch('https://10.42.0.1/api/locations/create/', {
-      // const response = await fetch('http://localhost:8000/locations/create/', {
-      method: "POST",  
-      body: JSON.stringify(locationData),
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      });
-      if (!response.ok) {
-        throw new Error('Failed to send data');
-      }
-
-      const responseData = await response.json();
-      console.log('Response from FastAPI:', responseData);
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
-  };
-  
-
-  //Integrating the solution for displacement offered in the paper 'Deriving Displacement from a 3 axis Accelerometer'
-  // https://cris.brighton.ac.uk/ws/portalfiles/portal/219655/Displacement+from+Accelerometer+(1).pdf
-
-  //the function receives the acceleration at that point on x, y and z, provided by the accelerometer and the last calculated position both as an array
-  // acc_sum: the sum of all the accelerations minus the last one
-  function toPosition(current_acc, last_acc, acc_sum, last_pos, time_elapsed) {
-    const current_pos = sum3d(...mult(sum3d(...mult(current_acc, 1/2), ...mult(last_acc, 3/2), ...mult(acc_sum, 2)), (time_elapsed^2)/2), ...last_pos);
-    return(current_pos);
-  }
-
-  
 
   useEffect(() => {
     if (typeof DeviceMotionEvent.requestPermission === "function") {
@@ -174,7 +102,7 @@ function handleLocationChanges(){
     y: currentPosition[1],
     z: currentPosition[2]
   });
-  sendLocationData();
+  // sendLocationData(locationData);
 }
 
   //everytime the acceleration changes we get the interval to calculate each of the positions
