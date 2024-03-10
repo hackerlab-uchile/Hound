@@ -4,9 +4,8 @@ import { sendLocationData } from './endpoints';
 
 function Accelerometer() {
 
-  function timeout(delay) {
-    return new Promise( res => setTimeout(res, delay) );
-  }
+  // max data load after sending the data 
+  const dataInterval = 1000;
 
   // scan state: 0 -> finished ; 1 -> on progress
   const [scanState, setScanState] = useState([0]);
@@ -124,8 +123,7 @@ function handleLocationChanges(xMean, yMean, zMean){
   
   //everytime the timer changes we get the interval to calculate each of the positions
   useEffect (() => {
-    const handleLocationWait = async () => {
-      await timeout(1000);
+    setTimeout(() => {
       let xMean = locationMean(xAxisList);
       let yMean = locationMean(yAxisList);
       let zMean = locationMean(zAxisList);
@@ -134,9 +132,10 @@ function handleLocationChanges(xMean, yMean, zMean){
       setXAxisList([]);
       setYAxisList([]);
       setZAxisList([]);
-    };
-  handleLocationWait();
-  }, []);
+    }, 1000)
+  },
+  // [mockX, mockY, mockZ]
+  );
 
 
   
