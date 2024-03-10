@@ -52,7 +52,7 @@ function Accelerometer() {
       // const response = await fetch('http://localhost:8000/networks/get_last_id/');
       const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
       const responseData = await response.json();
-      console.log('response', response);
+      // console.log('response', response);
       setCurrentNetworkScanId(responseData+1);
     };
 
@@ -125,6 +125,7 @@ function handleLocationChanges(xMean, yMean, zMean){
     let xMean = locationMean(xAxisList);
     let yMean = locationMean(yAxisList);
     let zMean = locationMean(zAxisList);
+    console.log ('x:', x, 'y:', y );
     setXAxisList([]);
     setYAxisList([]);
     setZAxisList([]);
