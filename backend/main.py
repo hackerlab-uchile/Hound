@@ -61,9 +61,9 @@ class NetworkScan(BaseModel):
 
 class LocationScan(BaseModel):
     network_scan_id: int = Field(gt=-1, lt=101)
-    x: float = Field(gt=-101, lt=101)
-    y: float = Field(gt=-101, lt=101)
-    z: float = Field(gt=-101, lt=101)
+    x: float = Field(gt=-1000001, lt=1000001)
+    y: float = Field(gt=-1000001, lt=1000001)
+    z: float = Field(gt=-1000001, lt=1000001)
 
 class SignalScan(BaseModel):
     network_scan_id: int = Field(gt=-1, lt=101)
