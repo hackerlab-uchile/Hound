@@ -113,7 +113,7 @@ function Accelerometer() {
   }, [x, y, z]);
 
   console.log('first xaxis', xAxisList);
-  
+
 function handleLocationChanges(xMean, yMean, zMean){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
@@ -146,7 +146,7 @@ function handleLocationChanges(xMean, yMean, zMean){
     }, 1000); // 1000 milliseconds = 1 second
     return () => clearInterval(interval);
 
-  },[]
+  }, [xAxisList, yAxisList, zAxisList]
   );
 
 
