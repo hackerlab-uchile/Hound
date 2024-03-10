@@ -41,9 +41,9 @@ function Accelerometer() {
 
   //adds the Axis to an array
   const addAxisDataList = (x, y, z) => {
-    setXAxisList(lastArray => [...lastArray, x]);
-    setYAxisList(lastArray => [...lastArray, y]);
-    setZAxisList(lastArray => [...lastArray, z]);
+    setXAxisList(lastArrayX => [...lastArrayX, x]);
+    setYAxisList(lastArrayY => [...lastArrayY, y]);
+    setZAxisList(lastArrayZ => [...lastArrayZ, z]);
   }
 
   // gets the network scan id to assign the new location instance to a new network scan. 
@@ -94,7 +94,9 @@ function Accelerometer() {
     setX(roundAcc(event.acceleration.x));
     setY(roundAcc(event.acceleration.y));
     setZ(roundAcc(event.acceleration.z));
-    addAxisDataList(x, y, z);
+    setXAxisList(lastArrayX => [...lastArrayX, x]);
+    setYAxisList(lastArrayY => [...lastArrayY, y]);
+    setZAxisList(lastArrayZ => [...lastArrayZ, z]);
     // setFirstInterval(currentTime);
     // setCurrentTime(Date.now());
     // setTimeElapsed((currentTime - firstInterval)/1000);
