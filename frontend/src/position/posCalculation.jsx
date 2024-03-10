@@ -1,14 +1,11 @@
 ////////////General use functions/////////////
 
 // calculate mean
-function locationMean(array){
-    const mean = array.reduce(elementSum);
+function locationMean(arr){
+    const mean = arr.reduce((a, b) => a + b, 0) / arr.length;
     return mean;
 }
 
-function elementSum(total, arr){
-    return total + arr;
-}
 
 //multiplication of arrays with constants
 function mult(arr, constant){

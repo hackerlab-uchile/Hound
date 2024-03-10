@@ -3,8 +3,10 @@ import { toPosition, sum3d, locationMean } from './posCalculation';
 import { sendLocationData } from './endpoints';
 
 function Accelerometer() {
-  // max data load after sending the data 
-  const dataInterval = 1000;
+
+  function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+  }
 
   // scan state: 0 -> finished ; 1 -> on progress
   const [scanState, setScanState] = useState([0]);
@@ -82,7 +84,7 @@ function Accelerometer() {
 
   function roundAcc(acc){
     if ((acc !== undefined) ||(acc !== null)){
-      return(parseFloat(acc.toFixed(0)));
+      return(parseFloat(acc.toFixed(2)));
     }
     else{
       return(0);
@@ -119,21 +121,22 @@ function handleLocationChanges(xMean, yMean, zMean){
   console.log('location_data', locationData);
   sendLocationData(locationData);
 }
-
+  
   //everytime the timer changes we get the interval to calculate each of the positions
-  setTimeout (() => {
-    let xMean = locationMean(xAxisList);
-    let yMean = locationMean(yAxisList);
-    let zMean = locationMean(zAxisList);
-    console.log ('x:', x, 'y:', y );
-    handleLocationChanges(xMean, yMean, zMean);
-    setXAxisList([]);
-    setYAxisList([]);
-    setZAxisList([]);
-  },
-  // [mockX, mockY, mockZ]
-  1000
-  );
+  useEffect (() => {
+    const handleLocationWait = async () => {
+      await timeout(1000);
+      let xMean = locationMean(xAxisList);
+      let yMean = locationMean(yAxisList);
+      let zMean = locationMean(zAxisList);
+      console.log ('x:', x, 'y:', y );
+      handleLocationChanges(xMean, yMean, zMean);
+      setXAxisList([]);
+      setYAxisList([]);
+      setZAxisList([]);
+    };
+  handleLocationWait();
+  }, []);
 
 
   
