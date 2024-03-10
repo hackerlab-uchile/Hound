@@ -97,6 +97,7 @@ function Accelerometer() {
     setXAxisList(lastArrayX => [...lastArrayX, x]);
     setYAxisList(lastArrayY => [...lastArrayY, y]);
     setZAxisList(lastArrayZ => [...lastArrayZ, z]);
+    console.log('first xaxis', xAxisList);
     // setFirstInterval(currentTime);
     // setCurrentTime(Date.now());
     // setTimeElapsed((currentTime - firstInterval)/1000);
@@ -134,9 +135,6 @@ function handleLocationChanges(xMean, yMean, zMean){
       handleLocationChanges(xMean, yMean, zMean);
       console.log ('x before:', xMean, 'y before:', yMean );
     }, 1000); // 1000 milliseconds = 1 second
-    setXAxisList([]);
-    setYAxisList([]);
-    setZAxisList([]);
     return () => clearInterval(interval);
 
   },[]
