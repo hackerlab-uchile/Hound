@@ -26,7 +26,7 @@ function Accelerometer() {
 
   const [firstInterval, setFirstInterval] = useState(Date.now());
   const [currentTime, setCurrentTime] = useState(Date.now()); 
-  const [currentNetworkScanId, setCurrentNetworkScanId] = useState(null);
+  const [currentNetworkScanId, setCurrentNetworkScanId] = useState(0);
   const [locationData, setLocationData] = useState({
     network_scan_id: '',
     x: '',
@@ -48,13 +48,7 @@ function Accelerometer() {
       const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
       const responseData = await response.json();
       console.log('response', response);
-      if (responseData === null || responseData === undefined){
-        setCurrentNetworkScanId(0)
-      }
-      else{
-        setCurrentNetworkScanId(responseData+1);
-      }
-      
+      setCurrentNetworkScanId(responseData+1);
     };
 
     fetchLastNetworkScanId();
