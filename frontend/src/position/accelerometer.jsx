@@ -126,10 +126,10 @@ function handleLocationChanges(xMean, yMean, zMean){
     let yMean = locationMean(yAxisList);
     let zMean = locationMean(zAxisList);
     console.log ('x:', x, 'y:', y );
+    handleLocationChanges(xMean, yMean, zMean);
     setXAxisList([]);
     setYAxisList([]);
     setZAxisList([]);
-    handleLocationChanges(xMean, yMean, zMean);
   },
   // [mockX, mockY, mockZ]
   1000
