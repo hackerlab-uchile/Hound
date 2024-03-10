@@ -1,5 +1,15 @@
 ////////////General use functions/////////////
 
+// calculate mean
+function locationMean(array){
+    const mean = array.reduce(elementSum);
+    return mean;
+}
+
+function elementSum(total, arr){
+    return total + arr;
+}
+
 //multiplication of arrays with constants
 function mult(arr, constant){
     const multiplication = arr.map((x) => constant * x);
@@ -27,4 +37,4 @@ function toPosition(current_acc, last_acc, acc_sum, last_pos, time_elapsed) {
     return(current_pos);
 }
 
-export {mult, sum3d, toPosition};
+export {mult, sum3d, toPosition, locationMean};

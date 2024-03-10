@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { toPosition, sum3d } from './posCalculation';
+import { toPosition, sum3d, locationMean } from './posCalculation';
 import { sendLocationData } from './endpoints';
 
 function Accelerometer() {
@@ -33,11 +33,16 @@ function Accelerometer() {
     y: '',
     z: ''
   });
-  const [locationDataList, setLocationDataList] = useState([])
+  const [xAxisList, setXAxisList] = useState([]);
+  const [yAxisList, setYAxisList] = useState([]);
+  const [zAxisList, setZAxisList] = useState([]);
 
-  //
-  const addLocationToList = (jsonLocalization) => {
-    setLocationDataList(lastArray => [...lastArray, jsonLocalization])
+
+  //adds the Axis to an array
+  const addAxisDataList = (x, y, z) => {
+    setXAxisList(lastArray => [...lastArray, x]);
+    setYAxisList(lastArray => [...lastArray, y]);
+    setZAxisList(lastArray => [...lastArray, z]);
   }
 
   // gets the network scan id to assign the new location instance to a new network scan. 
@@ -88,21 +93,22 @@ function Accelerometer() {
     setX(roundAcc(event.acceleration.x));
     setY(roundAcc(event.acceleration.y));
     setZ(roundAcc(event.acceleration.z));
-    setFirstInterval(currentTime);
-    setCurrentTime(Date.now());
-    setTimeElapsed((currentTime - firstInterval)/1000);
+    addAxisDataList(x, y, z);
+    // setFirstInterval(currentTime);
+    // setCurrentTime(Date.now());
+    // setTimeElapsed((currentTime - firstInterval)/1000);
   }
 
 
 
-function handleLocationChanges(){
+function handleLocationChanges(xMean, yMean, zMean){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
   setLastPosition(currentPosition);
   setLastAcceleration(currentAcceleration);
-  setCurrentAcceleration([x, y, z]);
+  setCurrentAcceleration([xMean, yMean, zMean]);
   setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
-  setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, timeElapsed));
+  setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 1000));
   console.log("position", currentPosition);
   setLocationData({
     network_scan_id: currentNetworkScanId,
@@ -114,12 +120,18 @@ function handleLocationChanges(){
   sendLocationData(locationData);
 }
 
-  //everytime the acceleration changes we get the interval to calculate each of the positions
-  useEffect (() => {
-    handleLocationChanges();
+  //everytime the timer changes we get the interval to calculate each of the positions
+  setTimeout (() => {
+    let xMean = locationMean(xAxisList);
+    let yMean = locationMean(yAxisList);
+    let zMean = locationMean(zAxisList);
+    setXAxisList([]);
+    setYAxisList([]);
+    setZAxisList([]);
+    handleLocationChanges(xMean, yMean, zMean);
   },
   // [mockX, mockY, mockZ]
-  [x, y, z]
+  1000
   );
 
 
