@@ -94,9 +94,9 @@ function Accelerometer() {
     setX(roundAcc(event.acceleration.x));
     setY(roundAcc(event.acceleration.y));
     setZ(roundAcc(event.acceleration.z));
-    setXAxisList(lastArrayX => [...lastArrayX, x]);
-    setYAxisList(lastArrayY => [...lastArrayY, y]);
-    setZAxisList(lastArrayZ => [...lastArrayZ, z]);
+    setXAxisList(xAxisList => [...xAxisList, x]);
+    setYAxisList(yAxisList => [...yAxisList, y]);
+    setZAxisList(zAxisList => [...zAxisList, z]);
     console.log('first xaxis', xAxisList);
     // setFirstInterval(currentTime);
     // setCurrentTime(Date.now());
