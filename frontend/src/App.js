@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>Hound</h1>
-      <GeolocationComponent/>
+      <BeginScan/>
     </div>
   );
 }

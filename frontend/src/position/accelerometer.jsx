@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { toPosition, sum3d } from './posCalculation';
-// import { sendLocationData } from './endpoints';
+import { sendLocationData } from './endpoints';
 
 function Accelerometer() {
-  // mock data //
-  // const [mockX, setMockX] = useState(null);
-  // const [mockY, setMockY] = useState(null);
-  // const [mockZ, setMockZ] = useState(null);
-  // mock data //
+  // max data load after sending the data 
+  const dataInterval = 1000;
+
+  // scan state: 0 -> finished ; 1 -> on progress
+  const [scanState, setScanState] = useState([0]);
 
   // accelerometer consts
   const [permissionGranted, setPermissionGranted] = useState(false);
@@ -33,6 +33,12 @@ function Accelerometer() {
     y: '',
     z: ''
   });
+  const [locationDataList, setLocationDataList] = useState([])
+
+  //
+  const addLocationToList = (jsonLocalization) => {
+    setLocationDataList(lastArray => [...lastArray, jsonLocalization])
+  }
 
   // gets the network scan id to assign the new location instance to a new network scan. 
   // Gets the data of the last Network scan id and sets the current nw scan
@@ -102,7 +108,7 @@ function handleLocationChanges(){
     y: currentPosition[1],
     z: currentPosition[2]
   });
-  // sendLocationData(locationData);
+  sendLocationData(locationData);
 }
 
   //everytime the acceleration changes we get the interval to calculate each of the positions
