@@ -41,6 +41,7 @@ function Accelerometer() {
 
   //adds the Axis to an array
   const addAxisDataList = (x, y, z) => {
+
     setXAxisList(lastArrayX => [...lastArrayX, x]);
     setYAxisList(lastArrayY => [...lastArrayY, y]);
     setZAxisList(lastArrayZ => [...lastArrayZ, z]);
@@ -101,9 +102,12 @@ function Accelerometer() {
   }
 
   useEffect (() => {
-    setXAxisList(xAxisList => [...xAxisList, x]);
-    setYAxisList(yAxisList => [...yAxisList, y]);
-    setZAxisList(zAxisList => [...zAxisList, z]);
+    const newArrX = [...xAxisList, x];
+    setXAxisList(newArrX );
+    const newArrY = [...yAxisList, y];
+    setYAxisList(newArrY);
+    const newArrZ = [...zAxisList, z];
+    setZAxisList(newArrZ);
   }, [x, y, z]);
 
 
