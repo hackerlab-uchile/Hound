@@ -95,11 +95,13 @@ function Accelerometer() {
     setX(roundAcc(event.acceleration.x));
     setY(roundAcc(event.acceleration.y));
     setZ(roundAcc(event.acceleration.z));
-    console.log('first xaxis', xAxisList);
+    
     // setFirstInterval(currentTime);
     // setCurrentTime(Date.now());
     // setTimeElapsed((currentTime - firstInterval)/1000);
   }
+
+  
 
   useEffect (() => {
     const newArrX = [...xAxisList, x];
@@ -110,7 +112,8 @@ function Accelerometer() {
     setZAxisList(newArrZ);
   }, [x, y, z]);
 
-
+  console.log('first xaxis', xAxisList);
+  
 function handleLocationChanges(xMean, yMean, zMean){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
