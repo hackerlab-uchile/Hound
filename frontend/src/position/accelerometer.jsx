@@ -108,6 +108,7 @@ function handleLocationChanges(){
     y: currentPosition[1],
     z: currentPosition[2]
   });
+  console.log('location_data', locationData);
   sendLocationData(locationData);
 }
 
