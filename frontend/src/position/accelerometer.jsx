@@ -123,7 +123,7 @@ function handleLocationChanges(){
   // generateRandomNumber();
   setPositions();
   console.log('location_data', locationData);
-  const newArr = [...locationArray, locationData];
+  const newArr = [...locationArray, JSON.stringify(locationData)];
   setLocationArray(newArr);
   if (counter >= payload){
     console.log('loc array', locationArray);
