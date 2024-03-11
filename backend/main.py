@@ -8,7 +8,7 @@ from database import engine_location, engine_signal, engine_network, SessionLoca
 from sqlalchemy.orm import Session
 from sqlalchemy import select, desc
 from fastapi.middleware.cors import CORSMiddleware
-
+from typing import List
 
 app = FastAPI(root_path = '/api/')
 
@@ -70,6 +70,9 @@ class SignalScan(BaseModel):
     station: str = None
     pwr: float = Field(gt=-101, lt=101)
 
+class LocationsList(BaseModel):
+    locations: List[LocationScan]
+
 #Routes
 
 
@@ -86,15 +89,16 @@ def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks
     return network_scan
 
 @app.post('/locations/create/')
-def create_location(location_scan: LocationScan, db: Session = Depends(get_locations_db)):
+def create_location(location_list: LocationsList, db: Session = Depends(get_locations_db)):
     location_scan_model = models.LocationScans()
-    location_scan_model.network_scan_id = location_scan.network_scan_id
-    location_scan_model.x = location_scan.x
-    location_scan_model.y = location_scan.y
-    location_scan_model.z = location_scan.z
-    # location_scan_model.location_started_at = location_scan.location_started_at
+    for location_data in location_list.items:
 
-    db.add(location_scan_model)
+        location_scan_model.network_scan_id = location_data.network_scan_id
+        location_scan_model.x = location_data.x
+        location_scan_model.y = location_data.y
+        location_scan_model.z = location_data.z
+    # location_scan_model.location_started_at = location_scan.location_started_at
+         db.add(location_scan_model)
     db.commit()
     return location_scan
 
