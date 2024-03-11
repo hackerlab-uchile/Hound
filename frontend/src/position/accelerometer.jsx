@@ -34,9 +34,9 @@ function Accelerometer() {
     y: '',
     z: ''
   });
-  const [xAxisList, setXAxisList] = useState([]);
-  const [yAxisList, setYAxisList] = useState([]);
-  const [zAxisList, setZAxisList] = useState([]);
+  const [xAxisList, setXAxisList] = useState([0]);
+  const [yAxisList, setYAxisList] = useState([0]);
+  const [zAxisList, setZAxisList] = useState([0]);
   const [xMean, setXMean] = useState(0);
   const [yMean, setYMean] = useState(0);
   const [zMean, setZMean] = useState(0);
@@ -53,7 +53,7 @@ function Accelerometer() {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      
+
       const responseData = await response.json();
       // console.log('response', response);
       setCurrentNetworkScanId(responseData+1);
@@ -120,6 +120,7 @@ function Accelerometer() {
 
   //calculates the mean of the arrays
   useEffect(() => {
+    console.log ('x after:', xAxisList, 'y after:', yAxisList );
     setXMean(locationMean(xAxisList));
     setYMean(locationMean(yAxisList));
     setZMean(locationMean(zAxisList));
@@ -128,7 +129,7 @@ function Accelerometer() {
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
-  console.log ('x after:', xMean, 'y after:', yMean );
+  
   setLastPosition(currentPosition);
   setLastAcceleration(currentAcceleration);
   setCurrentAcceleration([xMean, yMean, zMean]);
@@ -142,6 +143,9 @@ function handleLocationChanges(){
     z: currentPosition[2]
   });
   console.log('location_data', locationData);
+  setXAxisList([]);
+  setYAxisList([]);
+  setZAxisList([]);
   sendLocationData(locationData);
 }
   
