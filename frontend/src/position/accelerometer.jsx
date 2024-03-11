@@ -86,7 +86,7 @@ function Accelerometer() {
 
   function roundAcc(acc){
     if ((acc !== undefined) ||(acc !== null)){
-      return(parseFloat(acc.toFixed(2)));
+      return(parseFloat(acc.toFixed(1)));
     }
     else{
       return(0);
@@ -124,6 +124,7 @@ function handleLocationChanges(){
   setPositions();
   console.log('location_data', locationData);
   if (counter >= payload){
+    console.log('loc array', locationArray);
     sendLocationData(locationArray);
   }
   else{
