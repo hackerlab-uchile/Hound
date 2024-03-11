@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+
 import { toPosition, sum3d, locationMean } from './posCalculation';
 import { sendLocationData } from './endpoints';
 
@@ -41,8 +41,6 @@ function Accelerometer() {
   const [xMean, setXMean] = useState(0);
   const [yMean, setYMean] = useState(0);
   const [zMean, setZMean] = useState(0);
-  const dispatch = useDispatch();
-
 
   // gets the network scan id to assign the new location instance to a new network scan. 
   // Gets the data of the last Network scan id and sets the current nw scan
@@ -157,12 +155,13 @@ function handleLocationChanges(){
   useEffect (() => {
     console.log('means:', xMean, yMean, zMean);
     const interval = setInterval(() => {
-      dispatch(handleLocationChanges());
+      setPositions();
+      handleLocationChanges();
     }, 1000); // 1000 milliseconds = 1 second
     return () => clearInterval(interval);
     
   },
-  [dispatch]);
+  []);
 
 
   function handlePermissionGranted() {
