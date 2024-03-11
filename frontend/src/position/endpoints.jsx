@@ -11,7 +11,7 @@ const sendLocationData = async (locationData) => {
         const response = await fetch('https://10.42.0.1/api/locations/create/', {
         // const response = await fetch('http://localhost:8000/locations/create/', {
         method: "POST",  
-        body: locationData,
+        body: JSON.stringify({ 'locations': locationData }),
         headers: {
         "Content-Type": "application/json",
         },
