@@ -88,12 +88,12 @@ def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks
     db.commit()
     return network_scan
 
+
 @app.post('/locations/create/')
 def create_location(location_list: LocationsList, db: Session = Depends(get_locations_db)):
-    print(location_list)
     location_scan_model = models.LocationScans()
+    print(location_list.locations)
     for location_data in location_list.locations:
-        print(location_data)
         location_scan_model.network_scan_id = location_data.network_scan_id
         location_scan_model.x = location_data.x
         location_scan_model.y = location_data.y
