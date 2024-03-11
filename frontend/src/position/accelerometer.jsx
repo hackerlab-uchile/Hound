@@ -6,7 +6,7 @@ import { sendLocationData } from './endpoints';
 function Accelerometer() {
 
   // max data load after sending the data 
-  const dataInterval = 1000;
+  const payload = 100;
 
   // scan state: 0 -> finished ; 1 -> on progress
   const [scanState, setScanState] = useState([0]);
@@ -35,12 +35,8 @@ function Accelerometer() {
     y: '',
     z: ''
   });
-  const [xAxisList, setXAxisList] = useState([0]);
-  const [yAxisList, setYAxisList] = useState([0]);
-  const [zAxisList, setZAxisList] = useState([0]);
-  const [xMean, setXMean] = useState(0);
-  const [yMean, setYMean] = useState(0);
-  const [zMean, setZMean] = useState(0);
+  const [locationArray, setLocationArray] = useState([])
+  const [counter, setCounter] = useState(0);
 
   // gets the network scan id to assign the new location instance to a new network scan. 
   // Gets the data of the last Network scan id and sets the current nw scan
@@ -107,29 +103,10 @@ function Accelerometer() {
     // setTimeElapsed((currentTime - firstInterval)/1000);
   }
 
-  
-  //Adds the data to the array
-  useEffect (() => {
-    const newArrX = [...xAxisList, x];
-    setXAxisList(newArrX );
-    const newArrY = [...yAxisList, y];
-    setYAxisList(newArrY);
-    const newArrZ = [...zAxisList, z];
-    setZAxisList(newArrZ);
-  }, [x, y, z]);
-
-  //calculates the mean of the arrays
-  useEffect(() => {
-    console.log ('x after:', xAxisList, 'y after:', yAxisList );
-    setXMean(locationMean(xAxisList));
-    setYMean(locationMean(yAxisList));
-    setZMean(locationMean(zAxisList));
-  }, [xAxisList, yAxisList, zAxisList]);
-
   function setPositions(){
     setLastPosition(currentPosition);
     setLastAcceleration(currentAcceleration);
-    setCurrentAcceleration([xMean, yMean, zMean]);
+    setCurrentAcceleration([x, y, z]);
     setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 1000));
     setAccelerationSum(sum3d(...accelerationSum, ...lastAcceleration));
     console.log("position", currentPosition);
@@ -144,16 +121,25 @@ function Accelerometer() {
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
+  setPositions();
   console.log('location_data', locationData);
-  setXAxisList([0]);
-  setYAxisList([0]);
-  setZAxisList([0]);
-  sendLocationData(locationData);
+  if (counter >= payload){
+    sendLocationData(locationArray);
+  }
+  else{
+    const newArr = [...locationArray, locationData];
+    setLocationArray(newArr);
+    setCounter(counter + 1);
+  }
 }
   
+
+useEffect(() => {
+  handleLocationChanges();
+}, [x, y, z]);
+
   //everytime the timer changes we get the interval to calculate each of the positions
   useEffect (() => {
-    console.log('means:', xMean, yMean, zMean);
     const interval = setInterval(() => {
       setPositions();
       handleLocationChanges();
