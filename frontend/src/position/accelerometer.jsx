@@ -105,7 +105,7 @@ function Accelerometer() {
   }
 
   
-
+  //Adds the data to the array
   useEffect (() => {
     const newArrX = [...xAxisList, x];
     setXAxisList(newArrX );
@@ -115,6 +115,13 @@ function Accelerometer() {
     setZAxisList(newArrZ);
   }, [x, y, z]);
 
+  //calculates the mean of the arrays
+  useEffect(() => {
+    console.log('xAxis:', xAxisList);
+    setXMean(locationMean(xAxisList));
+    setYMean(locationMean(yAxisList));
+    setZMean(locationMean(zAxisList));
+  }, [xAxisList, yAxisList, zAxisList]);
 
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
@@ -138,17 +145,13 @@ function handleLocationChanges(){
   
   //everytime the timer changes we get the interval to calculate each of the positions
   useEffect (() => {
-    console.log('xAxis:', xAxisList);
-    setXMean(locationMean(xAxisList));
-    setYMean(locationMean(yAxisList));
-    setZMean(locationMean(zAxisList));
     const interval = setInterval(() => {
       handleLocationChanges();
       console.log ('x before:', xMean, 'y before:', yMean );
     }, 1000); // 1000 milliseconds = 1 second
     return () => clearInterval(interval);
 
-  }, []
+  }, [xMean, yMean, zMean]
   );
 
 
