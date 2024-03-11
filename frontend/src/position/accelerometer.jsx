@@ -124,24 +124,27 @@ function Accelerometer() {
     setXMean(locationMean(xAxisList));
     setYMean(locationMean(yAxisList));
     setZMean(locationMean(zAxisList));
+    setPositions();
   }, [xAxisList, yAxisList, zAxisList]);
+
+  function setPositions(){
+    setLastPosition(currentPosition);
+    setLastAcceleration(currentAcceleration);
+    setCurrentAcceleration([xMean, yMean, zMean]);
+    setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
+    setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 1000));
+    console.log("position", currentPosition);
+    setLocationData({
+      network_scan_id: currentNetworkScanId,
+      x: currentPosition[0],
+      y: currentPosition[1],
+      z: currentPosition[2]
+    });
+  }
 
 function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
-  
-  setLastPosition(currentPosition);
-  setLastAcceleration(currentAcceleration);
-  setCurrentAcceleration([xMean, yMean, zMean]);
-  setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
-  setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 1000));
-  console.log("position", currentPosition);
-  setLocationData({
-    network_scan_id: currentNetworkScanId,
-    x: currentPosition[0],
-    y: currentPosition[1],
-    z: currentPosition[2]
-  });
   console.log('location_data', locationData);
   setXAxisList([]);
   setYAxisList([]);
