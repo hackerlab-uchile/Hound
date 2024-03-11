@@ -90,6 +90,7 @@ def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks
 
 @app.post('/locations/create/')
 def create_location(location_list: LocationsList, db: Session = Depends(get_locations_db)):
+    print(location_list)
     location_scan_model = models.LocationScans()
     for location_data in location_list.locations:
         print(location_data)

@@ -128,6 +128,7 @@ function handleLocationChanges(){
   if (counter >= payload){
     console.log('loc array', locationArray);
     sendLocationData(locationArray);
+    setLocationArray([]);
     setCounter(0);
   }
 
