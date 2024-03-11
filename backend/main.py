@@ -94,13 +94,14 @@ def create_location(location_list: LocationsList, db: Session = Depends(get_loca
     location_scan_model = models.LocationScans()
     print(location_list.locations)
     for location_data in location_list.locations:
-        location_scan_model.network_scan_id = location_data.network_scan_id
-        location_scan_model.x = location_data.x
-        location_scan_model.y = location_data.y
-        location_scan_model.z = location_data.z
+        location_item = models.LocationScans(**location_data.dict())
+        # location_scan_model.network_scan_id = location_data.network_scan_id
+        # location_scan_model.x = location_data.x
+        # location_scan_model.y = location_data.y
+        # location_scan_model.z = location_data.z
         # location_scan_model.location_started_at = location_scan.location_started_at
-        db.add(location_scan_model)
-        db.commit()
+        db.add(location_item)
+    db.commit()
         
     
     return location_data
