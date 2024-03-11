@@ -14,6 +14,3 @@ def get_scannings():
                 break
             print(f"Recibida nueva señal: {line.strip()}")
 
-run_script()
-
-get_scannings()
