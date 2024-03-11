@@ -107,7 +107,7 @@ function Accelerometer() {
     setLastPosition(currentPosition);
     setLastAcceleration(currentAcceleration);
     setCurrentAcceleration([x, y, z]);
-    setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 10));
+    setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 0.01));
     setAccelerationSum(sum3d(...accelerationSum, ...lastAcceleration));
     console.log("position", currentPosition);
     setLocationData({
