@@ -7,4 +7,4 @@ mkfifo signalpipe
 expect scan_manager.exp
 # 
 
-
+cat signalpipe
