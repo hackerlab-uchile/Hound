@@ -117,7 +117,6 @@ function Accelerometer() {
 
   //calculates the mean of the arrays
   useEffect(() => {
-    console.log('xAxis:', xAxisList);
     setXMean(locationMean(xAxisList));
     setYMean(locationMean(yAxisList));
     setZMean(locationMean(zAxisList));
@@ -145,6 +144,7 @@ function handleLocationChanges(){
   
   //everytime the timer changes we get the interval to calculate each of the positions
   useEffect (() => {
+    console.log('means:', xMean, yMean, zMean);
     const interval = setInterval(() => {
       handleLocationChanges();
       console.log ('x before:', xMean, 'y before:', yMean );
