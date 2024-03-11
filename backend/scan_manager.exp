@@ -7,6 +7,8 @@ spawn airodump-ng wlan1 2>&1 > fifo1
 expect "airodump-ng"
 sleep 1
 
+set pipe [open "signalpipe" r]
+
 # Send simulated keypresses (e.g., 'q' twice)
 send "a"
 sleep 1

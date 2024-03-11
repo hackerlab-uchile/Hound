@@ -13,3 +13,7 @@ def get_scannings():
             if not line:
                 break
             print(f"Recibida nueva señal: {line.strip()}")
+
+run_script()
+
+get_scannings()
