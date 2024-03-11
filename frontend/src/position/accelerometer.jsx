@@ -130,25 +130,18 @@ function handleLocationChanges(){
   else{
     const newArr = [...locationArray, locationData];
     setLocationArray(newArr);
-    setCounter(counter + 1);
+    
   }
 }
   
 
 useEffect(() => {
   handleLocationChanges();
+  setCounter(counter + 1);
+  console.log('counter', counter);
 }, [x, y, z]);
 
-  //everytime the timer changes we get the interval to calculate each of the positions
-  useEffect (() => {
-    const interval = setInterval(() => {
-      setPositions();
-      handleLocationChanges();
-    }, 1000); // 1000 milliseconds = 1 second
-    return () => clearInterval(interval);
-    
-  },
-  []);
+  
 
 
   function handlePermissionGranted() {
