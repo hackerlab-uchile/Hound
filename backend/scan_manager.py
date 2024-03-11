@@ -9,7 +9,7 @@ def run_script():
 def get_scannings():
     with open(fifo_pipe, 'r') as signals:
         while True: 
-            line = fifo.readline()
+            line = signals.readline()
             if not line:
                 break
             print(f"Recibida nueva señal: {line.strip()}")
