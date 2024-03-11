@@ -107,7 +107,7 @@ function Accelerometer() {
     setLastPosition(currentPosition);
     setLastAcceleration(currentAcceleration);
     setCurrentAcceleration([x, y, z]);
-    setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 1000));
+    setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 10));
     setAccelerationSum(sum3d(...accelerationSum, ...lastAcceleration));
     console.log("position", currentPosition);
     setLocationData({
@@ -123,23 +123,22 @@ function handleLocationChanges(){
   // generateRandomNumber();
   setPositions();
   console.log('location_data', locationData);
+  const newArr = [...locationArray, JSON.stringify(locationData)];
+  setLocationArray(newArr);
   if (counter >= payload){
     console.log('loc array', locationArray);
     sendLocationData(locationArray);
+    setCounter(0);
   }
-  else{
-    const newArr = [...locationArray, locationData];
-    setLocationArray(newArr);
-    
-  }
+
 }
   
 
-useEffect(() => {
-  handleLocationChanges();
-  setCounter(counter + 1);
-  console.log('counter', counter);
-}, [x, y, z]);
+  useEffect(() => {
+    setCounter(counter + 1);
+    handleLocationChanges();
+    console.log('counter', counter);
+  }, [x, y, z]);
 
   
 
