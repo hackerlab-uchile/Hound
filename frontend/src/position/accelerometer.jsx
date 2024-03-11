@@ -42,23 +42,26 @@ function Accelerometer() {
   const [zMean, setZMean] = useState(0);
   
 
-  //adds the Axis to an array
-  const addAxisDataList = (x, y, z) => {
-
-    setXAxisList(lastArrayX => [...lastArrayX, x]);
-    setYAxisList(lastArrayY => [...lastArrayY, y]);
-    setZAxisList(lastArrayZ => [...lastArrayZ, z]);
-  }
-
   // gets the network scan id to assign the new location instance to a new network scan. 
   // Gets the data of the last Network scan id and sets the current nw scan
   useEffect(() => {
     const fetchLastNetworkScanId = async () => {
-      // const response = await fetch('http://localhost:8000/networks/get_last_id/');
-      const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
+      try{
+        // const response = await fetch('http://localhost:8000/networks/get_last_id/');
+        const response = await fetch('https://10.42.0.1/api/networks/get_last_id/');
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      
       const responseData = await response.json();
       // console.log('response', response);
       setCurrentNetworkScanId(responseData+1);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+
     };
 
     fetchLastNetworkScanId();
