@@ -10,7 +10,7 @@ from sqlalchemy import select, desc
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 
-app = FastAPI(root_path = '/api/')
+app = FastAPI()
 
 # origins = [
 #     "http://localhost",
@@ -92,15 +92,17 @@ def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks
 def create_location(location_list: LocationsList, db: Session = Depends(get_locations_db)):
     location_scan_model = models.LocationScans()
     for location_data in location_list.locations:
-
+        print(location_data)
         location_scan_model.network_scan_id = location_data.network_scan_id
         location_scan_model.x = location_data.x
         location_scan_model.y = location_data.y
         location_scan_model.z = location_data.z
-    # location_scan_model.location_started_at = location_scan.location_started_at
+        # location_scan_model.location_started_at = location_scan.location_started_at
         db.add(location_scan_model)
-    db.commit()
-    return location_scan
+        db.commit()
+        
+    
+    return location_data
 
 @app.post('/signals/create/')
 def create_signal(signal_scan: SignalScan, db: Session = Depends(get_signals_db)):
