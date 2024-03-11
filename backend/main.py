@@ -98,7 +98,7 @@ def create_location(location_list: LocationsList, db: Session = Depends(get_loca
         location_scan_model.y = location_data.y
         location_scan_model.z = location_data.z
     # location_scan_model.location_started_at = location_scan.location_started_at
-         db.add(location_scan_model)
+        db.add(location_scan_model)
     db.commit()
     return location_scan
 
