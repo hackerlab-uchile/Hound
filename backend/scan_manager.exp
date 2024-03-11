@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+
+set timeout 3  # Set a timeout for the interactions, adjust as needed
+
+# Run airodump-ng and wait for it to start
+spawn airodump-ng wlan1
+expect "airodump-ng"
+sleep 5   # Adjust this sleep time based on your needs
+
+# Send simulated keypresses (e.g., 'q' twice)
+send -- "a"
+sleep 1
+send -- "a"
+
