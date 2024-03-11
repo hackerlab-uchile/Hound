@@ -131,8 +131,8 @@ function Accelerometer() {
     setLastPosition(currentPosition);
     setLastAcceleration(currentAcceleration);
     setCurrentAcceleration([xMean, yMean, zMean]);
-    setAccelerationSum(sum3d(...accelerationSum, ...currentAcceleration));
     setCurrentPosition(toPosition(currentAcceleration,lastAcceleration,accelerationSum,lastPosition, 1000));
+    setAccelerationSum(sum3d(...accelerationSum, ...lastAcceleration));
     console.log("position", currentPosition);
     setLocationData({
       network_scan_id: currentNetworkScanId,
@@ -161,11 +161,10 @@ function handleLocationChanges(){
     }, 1000); // 1000 milliseconds = 1 second
     return () => clearInterval(interval);
 
-  }, [locationData]
+  }, []
   );
 
 
-  
   function handlePermissionGranted() {
     DeviceMotionEvent.requestPermission()
       .then((permissionState) => {
