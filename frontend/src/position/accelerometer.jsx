@@ -7,7 +7,7 @@ function Accelerometer() {
 
   // max data load after sending the data 
   const payload = 100;
-
+  const [isFinished, setIsFinished] = useState(false)
   // scan state: 0 -> finished ; 1 -> on progress
   const [scanState, setScanState] = useState([0]);
 
@@ -125,7 +125,7 @@ function handleLocationChanges(){
   console.log('location_data', locationData);
   const newArr = [...locationArray, locationData];
   setLocationArray(newArr);
-  if (counter >= payload){
+  if (counter >= payload || isFinished){
     console.log('loc array', locationArray);
     sendLocationData(locationArray);
     setLocationArray([]);
