@@ -146,9 +146,9 @@ function handleLocationChanges(){
   //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
   // generateRandomNumber();
   console.log('location_data', locationData);
-  setXAxisList([]);
-  setYAxisList([]);
-  setZAxisList([]);
+  setXAxisList([0]);
+  setYAxisList([0]);
+  setZAxisList([0]);
   sendLocationData(locationData);
 }
   
@@ -161,7 +161,7 @@ function handleLocationChanges(){
     }, 1000); // 1000 milliseconds = 1 second
     return () => clearInterval(interval);
 
-  }, []
+  }, [locationData]
   );
 
 
