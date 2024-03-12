@@ -21,20 +21,18 @@ def get_scannings():
             if not line:
                 break
             while (i < len(str(line.strip()))) :
-                print(str(line.strip()))
                 if (str(line.strip())[i] == "(" ):
                     bssid = "(not associated)"
                     print(bssid)
                     i += 15
-                    break
+                print(str(line.strip()))
                 if (str(line.strip())[i]== ":"):
                     if (bssid != ""):
+                        print(station = str(line.strip())[i-2: i+14])
                         station = str(line.strip())[i-2: i+14]
-                        print(station)
                     else:
                         bssid = str(line.strip())[i-2: i+14]
-                    i += 14
-                    break
+                        i += 14
                 if (str(line.strip())[i]== "-"):
                     if (station != "" and pwr == ""):
                         pwr = str(line.strip())[i: i+2]
@@ -44,8 +42,9 @@ def get_scannings():
                     bssid = ""
                     station = ""
                     pwr = ""
+                    i = 0
+                    break
                 i+=1
-            print(array_stations)
     file.close()
 
 def parse_scannings():
