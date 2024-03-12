@@ -57,7 +57,7 @@ def parse_scannings():
                 bssid = ""
                 station = ""
                 pwr = ""
-        print (parsed_stations)
+    print (parsed_stations)
             
             
                     
