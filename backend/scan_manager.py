@@ -21,5 +21,5 @@ def parse_scannings():
             line = signals.readline()
             if not line:
                 break
-            if (line.strip()[10] == " " & line.strip()[11] == "("):
+            if (line.strip()[10] == " " and line.strip()[11] == "("):
                 print(f"parsed data: {line.strip()}")
