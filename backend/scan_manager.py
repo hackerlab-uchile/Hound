@@ -38,7 +38,7 @@ def parse_scannings():
                     station = line[i-2: i+14]
                 else:
                     bssid = line[i-2: i+14]
-                    i += 14
+                i += 14
             if (line[i]== "-"):
                 if (station != "" and pwr == ""):
                     pwr = line[i: i+2]
