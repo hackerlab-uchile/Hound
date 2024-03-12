@@ -25,3 +25,4 @@ def parse_scannings():
                 break
             if (line.strip()[10] == " " and line.strip()[11] == "("):
                 print(f"parsed data: {line.strip()}")
+                print("hols")
