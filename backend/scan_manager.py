@@ -41,7 +41,7 @@ def parse_scannings():
                 if (bssid == "" and not (" " in temp)):
                     bssid = temp
                     i += 14
-                break
+                    break
                 if (bssid != ""):
                     station = temp
                     i += 14
