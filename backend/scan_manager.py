@@ -5,15 +5,12 @@ script_path = './scan_manager.sh'
 count = 0
 file = open('monitor.txt', 'w')
 array_stations = []
-
+parsed_stations = []
 def run_script():
     subprocess.call(['sh', script_path])
 
 def get_scannings():
     with open(fifo_pipe, 'r') as signals:
-        bssid = ""
-        station = ""
-        pwr = ""
         while True: 
             line = signals.readline()
             if not line:
@@ -25,6 +22,9 @@ def parse_scannings():
     for j in range (0,len(array_stations)):
         line = array_stations[j]
         i=0
+        bssid = ""
+        station = ""
+        pwr = ""
         while i<len(line) :
             # if (str(line)[i] != " "):
             #     print(str(line)[i])
@@ -43,10 +43,7 @@ def parse_scannings():
                     pwr = str(line[i: i+2])
                     break
             if (station != "" and pwr != "" and bssid != ""):
-                array_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
-                bssid = ""
-                station = ""
-                pwr = ""
+                parsed_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
                 i = 0
                 break
             i+=1
