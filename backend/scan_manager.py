@@ -19,7 +19,6 @@ def get_scannings():
             line = signals.readline()
             if not line:
                 break
-            print (line.strip())
             while (i < len(str(line.strip()))) :
                 if (line.strip()[i] == "(" ):
                     bssid = "(not associated)"
@@ -42,7 +41,7 @@ def get_scannings():
                     station = ""
                     pwr = ""
                 i+=1
-                
+            print(array_stations)
     file.close()
 
 def parse_scannings():
