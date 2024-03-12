@@ -26,9 +26,9 @@ def parse_scannings():
         station = ""
         pwr = ""
         while i<(len(line)-1) :
-            bssid = ""
-            station = ""
-            pwr = ""
+            # bssid = ""
+            # station = ""
+            # pwr = ""
             i+=1
             # if (str(line)[i] != " "):
             #     print(str(line)[i])
@@ -54,6 +54,9 @@ def parse_scannings():
                     
             if (station != "" and pwr != "" and bssid != ""):
                 parsed_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
+                bssid = ""
+                station = ""
+                pwr = ""
         print (parsed_stations)
             
             
