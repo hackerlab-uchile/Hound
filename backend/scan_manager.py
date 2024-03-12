@@ -5,7 +5,6 @@ script_path = './scan_manager.sh'
 count = 0
 file = open('monitor.txt', 'w')
 array_stations = []
-i = 0
 
 def run_script():
     subprocess.call(['sh', script_path])
@@ -25,6 +24,7 @@ def get_scannings():
 def parse_scannings():
     for j in range (0,len(array_stations)):
         line = array_stations[j]
+        i=0
         while i<len(line) :
             # if (str(line)[i] != " "):
             #     print(str(line)[i])
