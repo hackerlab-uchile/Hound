@@ -19,7 +19,7 @@ def get_scannings():
             line = signals.readline()
             if not line:
                 break
-            print(str(line.strip())[3])
+            print(str(line.strip()))
             while (i < len(str(line.strip()))) :
                 if (str(line.strip())[i] == "(" ):
                     bssid = "(not associated)"
