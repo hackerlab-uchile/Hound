@@ -6,6 +6,7 @@ count = 0
 file = open('monitor.txt', 'w')
 array_stations = []
 parsed_stations = []
+
 def run_script():
     subprocess.call(['sh', script_path])
 
@@ -41,7 +42,6 @@ def parse_scannings():
                 if (bssid == "" and not (" " in temp)):
                     bssid = temp
                     i += 14
-                    break
                 if (bssid != ""):
                     station = temp
                     i += 14
@@ -57,7 +57,7 @@ def parse_scannings():
                 # bssid = ""
                 # station = ""
                 # pwr = ""
-    print (parsed_stations)
+        print (parsed_stations)
             
             
                     
