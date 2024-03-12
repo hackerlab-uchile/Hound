@@ -15,7 +15,7 @@ def get_scannings():
                 break
             print(f"Recibida nueva señal: {line.strip()}")
 
-def parse_scannings(line):
+def parse_scannings():
     with open(fifo_pipe, 'r') as signals:
         while True: 
             line = signals.readline()
