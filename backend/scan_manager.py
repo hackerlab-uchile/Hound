@@ -21,7 +21,7 @@ def get_scannings():
 def parse_scannings():
     for j in range (0,len(array_stations)):
         line = array_stations[j]
-        i=0
+        i=-1
         bssid = ""
         station = ""
         pwr = ""
@@ -29,19 +29,19 @@ def parse_scannings():
             i+=1
             # if (str(line)[i] != " "):
             #     print(str(line)[i])
-            if (str(line)[i] == "(" ):
+            if (line[i] == "(" ):
                 bssid = "(not associated)"
                 i += 15
-            if (str(line)[i]== ":" and i!=0):
+            if (line[i]== ":" and i!=0):
                 if (bssid != ""):
-                    print(str(line[i-2: i+14]))
-                    station = str(line[i-2: i+14])
+                    print(line[i-2: i+14])
+                    station = line[i-2: i+14]
                 else:
-                    bssid = str(line[i-2: i+14])
+                    bssid = line[i-2: i+14]
                     i += 14
-            if (str(line[i])== "-"):
+            if (line[i]== "-"):
                 if (station != "" and pwr == ""):
-                    pwr = str(line[i: i+2])
+                    pwr = line[i: i+2]
                     break
             if (station != "" and pwr != "" and bssid != ""):
                 parsed_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
