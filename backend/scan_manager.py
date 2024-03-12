@@ -15,6 +15,7 @@ def get_scannings():
             if not line:
                 break
             file.write(line.strip())
+            file.write("hols")
     file.close()
 
 def parse_scannings():
@@ -25,4 +26,4 @@ def parse_scannings():
                 break
             if (line.strip()[10] == " " and line.strip()[11] == "("):
                 print(f"parsed data: {line.strip()}")
-                print("hols")
+                
