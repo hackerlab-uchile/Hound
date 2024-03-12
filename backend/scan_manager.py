@@ -5,6 +5,7 @@ script_path = './scan_manager.sh'
 count = 0
 file = open('monitor.txt', 'w')
 array_stations = []
+i = 0
 
 def run_script():
     subprocess.call(['sh', script_path])
