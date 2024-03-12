@@ -28,7 +28,7 @@ def get_scannings():
                 print(str(line.strip()))
                 if (str(line.strip())[i]== ":"):
                     if (bssid != ""):
-                        print(station = str(line.strip())[i-2: i+14])
+                        print(str(line.strip())[i-2: i+14])
                         station = str(line.strip())[i-2: i+14]
                     else:
                         bssid = str(line.strip())[i-2: i+14]
