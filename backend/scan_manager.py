@@ -4,18 +4,43 @@ fifo_pipe = 'signalpipe'
 script_path = './scan_manager.sh'
 count = 0
 file = open('monitor.txt', 'w')
+array_stations = []
 
 def run_script():
     subprocess.call(['sh', script_path])
 
 def get_scannings():
     with open(fifo_pipe, 'r') as signals:
+        bssid = ""
+        station = ""
+        pwr = ""
         while True: 
             line = signals.readline()
             if not line:
                 break
-            file.write(line.strip())
-            file.write("hols")
+            while i<len(line.strip()) :
+                if (line.strip()[i] == "(" ):
+                    bssid = "(not associated)"
+                    i += 15
+                    break
+                if (line.strip()[i]== ":"):
+                    if (bssid != ""):
+                        station = line.strip()[i-2: i+14]
+                    else:
+                        bssid = line.strip()[i-2: i+14]
+                    i += 14
+                    break
+                if (line.strip()[i]== "-"):
+                    if (station != "" and pwr == ""):
+                        pwr = line.strip()[i: i+2]
+                        break
+                if (station != "" and pwr != "" and bssid != ""):
+                    array_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
+                    bssid = ""
+                    station = ""
+                    pwr = ""
+                i+=1
+                print(array_stations)
     file.close()
 
 def parse_scannings():
