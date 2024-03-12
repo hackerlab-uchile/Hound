@@ -19,14 +19,14 @@ def get_scannings():
             if not line:
                 break
             array_stations.append(str(line))
-    print (array_stations)
+    parse_scannings()
 
 def parse_scannings():
-    for i in range (0,len(array_stations)):
-        line = array_stations[i]
-        for i in range (0, len(str(line))) :
-            if (str(line)[i] != " "):
-                print(str(line)[i])
+    for j in range (0,len(array_stations)):
+        line = array_stations[j]
+        while i<len(line) :
+            # if (str(line)[i] != " "):
+            #     print(str(line)[i])
             if (str(line)[i] == "(" ):
                 bssid = "(not associated)"
                 i += 15
