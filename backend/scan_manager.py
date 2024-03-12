@@ -27,10 +27,10 @@ def get_scannings():
                 print(str(line))
                 if (str(line)[i]== ":"):
                     if (bssid != ""):
-                        print(str(line[i-2: i+14])
+                        print(str(line[i-2: i+14]))
                         station = str(line[i-2: i+14])
                     else:
-                        bssid = str(line[i-2: i+14]
+                        bssid = str(line[i-2: i+14])
                         i += 14
                 if (str(line[i])== "-"):
                     if (station != "" and pwr == ""):
