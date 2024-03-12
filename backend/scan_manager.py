@@ -14,11 +14,12 @@ def get_scannings():
         bssid = ""
         station = ""
         pwr = ""
+        i = 0
         while True: 
             line = signals.readline()
             if not line:
                 break
-            while i<len(line.strip()) :
+            while (i < len(line.strip())) :
                 if (line.strip()[i] == "(" ):
                     bssid = "(not associated)"
                     i += 15
