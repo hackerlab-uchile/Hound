@@ -21,11 +21,11 @@ def get_scannings():
             if not line:
                 break
             while (i < len(str(line))) :
+                print(str(line))
                 if (str(line)[i] == "(" ):
                     bssid = "(not associated)"
                     i += 15
-                    print(bssid)
-                if (str(line)[i]== ":"):
+                if (str(line)[i]== ":" and i!=0):
                     if (bssid != ""):
                         print(str(line[i-2: i+14]))
                         station = str(line[i-2: i+14])
