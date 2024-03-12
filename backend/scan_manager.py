@@ -42,6 +42,7 @@ def parse_scannings():
                 if (bssid == "" and not (" " in temp)):
                     bssid = temp
                     i += 14
+                    
                 if (bssid != ""):
                     station = temp
                     i += 14
@@ -54,10 +55,7 @@ def parse_scannings():
                     
             if (station != "" and pwr != "" and bssid != ""):
                 parsed_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
-                # bssid = ""
-                # station = ""
-                # pwr = ""
-            print (parsed_stations)
+        print (parsed_stations)
             
             
                     
