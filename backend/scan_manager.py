@@ -21,11 +21,12 @@ def get_scannings():
 def parse_scannings():
     for j in range (0,len(array_stations)):
         line = array_stations[j]
-        i=0
+        i=-1
         bssid = ""
         station = ""
         pwr = ""
         while i<len(line) :
+            i+=1
             # if (str(line)[i] != " "):
             #     print(str(line)[i])
             if (str(line)[i] == "(" ):
@@ -44,7 +45,6 @@ def parse_scannings():
                     break
             if (station != "" and pwr != "" and bssid != ""):
                 parsed_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
-                i = 0
                 break
-            i+=1
+            
                     
