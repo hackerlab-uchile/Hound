@@ -16,7 +16,7 @@ def get_scannings():
             if not line:
                 break
             array_stations.append(str(line))
-    print(array_stations)
+    parse_scannings()
 
 def parse_scannings():
     for j in range (0,len(array_stations)):
