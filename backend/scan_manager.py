@@ -19,21 +19,22 @@ def get_scannings():
             line = signals.readline()
             if not line:
                 break
+            print(str(line.strip())[3])
             while (i < len(str(line.strip()))) :
-                if (line.strip()[i] == "(" ):
+                if (str(line.strip())[i] == "(" ):
                     bssid = "(not associated)"
                     i += 15
                     break
-                if (line.strip()[i]== ":"):
+                if (str(line.strip())[i]== ":"):
                     if (bssid != ""):
-                        station = line.strip()[i-2: i+14]
+                        station = str(line.strip())[i-2: i+14]
                     else:
-                        bssid = line.strip()[i-2: i+14]
+                        bssid = str(line.strip())[i-2: i+14]
                     i += 14
                     break
-                if (line.strip()[i]== "-"):
+                if (str(line.strip())[i]== "-"):
                     if (station != "" and pwr == ""):
-                        pwr = line.strip()[i: i+2]
+                        pwr = str(line.strip())[i: i+2]
                         break
                 if (station != "" and pwr != "" and bssid != ""):
                     array_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
