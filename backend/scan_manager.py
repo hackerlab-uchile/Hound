@@ -46,9 +46,9 @@ def parse_scannings():
                     station = temp
                     i += 14
                     
-            if (line[i] == "-"):
-                if (pwr == ""):
-                    pwr = line[i: i+2]
+            if (line[i] == "-" and (pwr == "")):
+                if not (" " in line[i+1] ):
+                    pwr = line[i: i+3]
                     print(pwr)
                     i += 2
                     
