@@ -19,6 +19,7 @@ def get_scannings():
             line = signals.readline()
             if not line:
                 break
+            print(len(str(line.strip())))
             while (i < len(str(line.strip()))) :
                 print(str(line.strip())[i])
                 if (str(line.strip())[i] == "(" ):
