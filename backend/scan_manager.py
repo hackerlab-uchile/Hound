@@ -21,7 +21,7 @@ def get_scannings():
 def parse_scannings():
     for j in range (0,len(array_stations)):
         line = array_stations[j]
-        i=-1
+        i=0
         bssid = ""
         station = ""
         pwr = ""
