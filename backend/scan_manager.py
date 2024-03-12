@@ -15,7 +15,7 @@ def get_scannings():
             if not line:
                 break
             file.write(line.strip())
-    f.close()
+    file.close()
 
 def parse_scannings():
     with open(fifo_pipe, 'r') as signals:
