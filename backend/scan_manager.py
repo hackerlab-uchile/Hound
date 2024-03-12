@@ -43,9 +43,9 @@ def parse_scannings():
                 #     i += 14
                 #     break
                 # if (bssid != ""):
-                if ( not (" " in temp)):
-                    station = temp
-                    i += 14
+                # if ( not (" " in temp)):
+                station = temp
+                i += 14
                 print( station)
             if (line[i] == "-" and (pwr == "")):
                 if not (" " in line[i+1] ):
