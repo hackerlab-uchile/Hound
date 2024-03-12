@@ -24,7 +24,7 @@ def get_scannings():
                 if (str(line)[i] == "(" ):
                     bssid = "(not associated)"
                     i += 15
-                    
+                    print(bssid)
                 if (str(line)[i]== ":"):
                     if (bssid != ""):
                         print(str(line[i-2: i+14]))
