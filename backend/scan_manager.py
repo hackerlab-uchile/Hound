@@ -1,5 +1,6 @@
 import subprocess 
 import time 
+import multiprocessing
 
 fifo_pipe = 'signalpipe'
 script_path = './scan_manager.sh'
@@ -9,11 +10,15 @@ array_stations = []
 parsed_stations = []
 
 def run_script():
-    subprocess.call(['sh', script_path])
-    time.sleep(20)
-    get_scannings()
+    process1 = multiprocessing.Process(target = subprocess.call(['sh', script_path]))
+    process2 = multiprocessing.Process(target = get_scannings())
+    process1.start()
+    process2.start()
 
+    
 def get_scannings():
+    print("Listening pipe")
+    time.sleep(20)
     with open(fifo_pipe, 'r') as signals:
         while True: 
             line = signals.readline()

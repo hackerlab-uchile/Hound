@@ -1,5 +1,5 @@
 #!/bin/sh
-echo 'Iniciando escaneo de red'
+echo 'Starting network scan...'
 
 mkfifo signalpipe
 
