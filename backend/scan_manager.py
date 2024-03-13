@@ -13,7 +13,16 @@ parsed_stations = []
 urlsignal = "https://10.42.0.1/api/signals/create/"
 urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 
-nwid = requests.get(urlnwid)
+nwid_response = get_nwid(requests.get(urlnwid))
+nwid = nwid_response
+
+def get_nwid(response):
+    if nwid_response.status_code == 200:
+        # Extract the JSON data from the response
+        return nwid_response.json()
+    else 
+        return 0
+
 
 def run_script():
     subprocess.call(['sudo', 'sh', manager_path])
