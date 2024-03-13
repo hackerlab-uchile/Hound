@@ -1,6 +1,7 @@
 import time 
 import requests
 import json
+import subprocess 
 
 fifo_pipe = 'signalpipe'
 script_path = './scan_manager.sh'
