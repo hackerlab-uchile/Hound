@@ -30,50 +30,50 @@ def get_scannings():
             line = signals.readline()
             if not line:
                 break
-            array_stations.append(str(line))
-    parse_scannings()
+            # array_stations.append(str(line))
+            parse_scannings(str(line))
 
-def parse_scannings():
-    for j in range (0,len(array_stations)):
-        line = array_stations[j]
-        i=-1
-        bssid = ""
-        station = ""
-        pwr = ""
-        while i<(len(line)-1) :
+def parse_scannings(line):
+    # for j in range (0,len(array_stations)):
+    line = array_stations[j]
+    i=-1
+    bssid = ""
+    station = ""
+    pwr = ""
+    while i<(len(line)-1) :
 
-            i+=1
-            # if (str(line)[i] != " "):
-            #     print(str(line)[i])
-            if (line[i] == "(" ):
-                bssid = "(not associated)"
-                i += 15
+        i+=1
+        # if (str(line)[i] != " "):
+        #     print(str(line)[i])
+        if (line[i] == "(" ):
+            bssid = "(not associated)"
+            i += 15
 
-            if (line[i] == ":" and bssid == ""):
-                temp = line[i-2: i+15]
-                if (not (" " in temp)):
-                    bssid = temp
-                    i += 14
+        if (line[i] == ":" and bssid == ""):
+            temp = line[i-2: i+15]
+            if (not (" " in temp)):
+                bssid = temp
+                i += 14
+            
+        if (line[i] == ":" and station == "" and bssid != ""):
+            temp = line[i-2: i+15]
+            if ( not (" " in temp)):
+                station = temp
+                i += 14
+
+        if (line[i] == "-" and (pwr == "")):
+            if not (" " in line[i+1] ):
+                pwr = line[i: i+3]
+                i += 2
                 
-            if (line[i] == ":" and station == "" and bssid != ""):
-                temp = line[i-2: i+15]
-                if ( not (" " in temp)):
-                    station = temp
-                    i += 14
-
-            if (line[i] == "-" and (pwr == "")):
-                if not (" " in line[i+1] ):
-                    pwr = line[i: i+3]
-                    i += 2
-                    
-            if (station != "" and pwr != "" and bssid != ""):
-                request_data = { 'network_id': nwid, 'pwr':pwr, 'station': station }
-                request = requests.post(urlsignal, request_data)
-                print(request, request_data)
-                parsed_stations.append({ 'network_id': nwid, 'pwr':pwr, 'station': station })
-                bssid = ""
-                station = ""
-                pwr = ""
+        if (station != "" and pwr != "" and bssid != ""):
+            request_data = { 'network_id': nwid, 'pwr':pwr, 'station': station }
+            # request = requests.post(urlsignal, request_data)
+            print(request, request_data)
+            parsed_stations.append({ 'network_id': nwid, 'pwr':pwr, 'station': station })
+            bssid = ""
+            station = ""
+            pwr = ""
     print (parsed_stations)
             
             
