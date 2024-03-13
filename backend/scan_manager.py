@@ -1,6 +1,6 @@
-import subprocess 
 import time 
-import multiprocessing
+import requests
+import json
 
 fifo_pipe = 'signalpipe'
 script_path = './scan_manager.sh'
@@ -8,6 +8,10 @@ count = 0
 file = open('monitor.txt', 'w')
 array_stations = []
 parsed_stations = []
+urlsignal = "https://10.42.0.1/api/signals/create/"
+urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
+
+nwid = requests.get(urlnwid)
 
 def run_script():
     subprocess.call(['sh', script_path])
@@ -59,7 +63,8 @@ def parse_scannings():
                     i += 2
                     
             if (station != "" and pwr != "" and bssid != ""):
-                parsed_stations.append({'bssid': bssid, 'station': station, 'pwr':pwr})
+                requests.post(urlsignal, json={ 'network_id': nwid, 'pwr':pwr, 'station': station })
+                parsed_stations.append({ 'network_id': nwid, 'pwr':pwr, 'station': station })
                 bssid = ""
                 station = ""
                 pwr = ""

@@ -157,3 +157,5 @@ async def get_signal_by_instance(network_id: int, db: Session = Depends(get_sign
 @app.post('/start_signal_scan')
 def start_scanning():
     scan_manager.run_script()
+
+
