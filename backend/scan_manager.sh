@@ -5,7 +5,7 @@ mkfifo signalpipe
 
 
 ## calling the airodump instance and the function to get the data from the pipe
-uuid="$(uuidgen)" && tmux new -d -s "$uuid"
+uuid="(uuidgen)" && tmux new -d -s "$uuid"
 tmux splitw -h -t "${uuid}:0.0"
 tmux send-keys -t "${uuid}.0" "cd Hound/backend" ENTER
 tmux send-keys -t "${uuid}.0" "expect scan_manager.exp" ENTER
