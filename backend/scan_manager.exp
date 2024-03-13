@@ -6,7 +6,7 @@ spawn bash -c "airodump-ng wlan1 | tee signalpipe monitor.txt > /dev/null"
 expect "airodump-ng"
 
 
-# Send simulated keypresses (e.g., 'q' twice)
+# 'a' to toggle the scanning instance on airodump where they are set on the following order: AP+STA; AP+STA+ACK; AP only; STA only
 send "a"
 sleep 1
 send "a"

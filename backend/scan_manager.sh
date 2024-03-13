@@ -3,8 +3,11 @@ echo 'Starting network scan...'
 
 mkfifo signalpipe
 
-# 'a' to toggle the scanning instance on airodump where they are set on the following order: AP+STA; AP+STA+ACK; AP only; STA only
-expect scan_manager.exp
+
+## calling the airodump instance and the function to get the data from the pipe
+
+expect scan_manager.exp&
+python -c 'import scan_manager; scan_manager.get_scannings()'&
 # 
 
 

@@ -10,12 +10,9 @@ array_stations = []
 parsed_stations = []
 
 def run_script():
-    process1 = multiprocessing.Process(target = subprocess.call(['sh', script_path]))
-    process2 = multiprocessing.Process(target = get_scannings())
-    process1.start()
-    process2.start()
+    subprocess.call(['sh', script_path])
 
-    
+
 def get_scannings():
     print("Listening pipe")
     time.sleep(20)
