@@ -14,8 +14,9 @@ def run_script():
 
 
 def get_scannings():
+    print("Waiting initialization ...")
+    time.sleep(17)
     print("Listening pipe")
-    time.sleep(20)
     with open(fifo_pipe, 'r') as signals:
         while True: 
             line = signals.readline()
