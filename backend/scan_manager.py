@@ -1,4 +1,5 @@
 import subprocess 
+import time 
 
 fifo_pipe = 'signalpipe'
 script_path = './scan_manager.sh'
@@ -9,6 +10,8 @@ parsed_stations = []
 
 def run_script():
     subprocess.call(['sh', script_path])
+    time.sleep(20)
+    get_scannings()
 
 def get_scannings():
     with open(fifo_pipe, 'r') as signals:
