@@ -4,7 +4,8 @@ import json
 import subprocess 
 
 fifo_pipe = 'signalpipe'
-script_path = './scan_manager.sh'
+manager_path = './scan_manager.sh'
+stop_path = './stop_scan.sh'
 count = 0
 file = open('monitor.txt', 'w')
 array_stations = []
@@ -15,8 +16,10 @@ urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 nwid = requests.get(urlnwid)
 
 def run_script():
-    subprocess.call(['sudo', 'sh', script_path])
+    subprocess.call(['sudo', 'sh', manager_path])
 
+def stop_script():
+    subprocess.call(['sudo', 'sh', stop_path])
 
 def get_scannings():
     print("Waiting initialization ...")
@@ -64,7 +67,9 @@ def parse_scannings():
                     i += 2
                     
             if (station != "" and pwr != "" and bssid != ""):
-                requests.post(urlsignal, json={ 'network_id': nwid, 'pwr':pwr, 'station': station })
+                request_data = { 'network_id': nwid, 'pwr':pwr, 'station': station }
+                request = requests.post(urlsignal, request_data)
+                print(request, request_data)
                 parsed_stations.append({ 'network_id': nwid, 'pwr':pwr, 'station': station })
                 bssid = ""
                 station = ""

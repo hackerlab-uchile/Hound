@@ -158,4 +158,9 @@ async def get_signal_by_instance(network_id: int, db: Session = Depends(get_sign
 def start_scanning():
     scan_manager.run_script()
 
+# Function dedicated to send the start instruction to the other 
+@app.post('/stop_signal_scan')
+def stop_scanning():
+    scan_manager.stop_script()
+
 
