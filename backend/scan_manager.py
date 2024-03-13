@@ -79,8 +79,8 @@ def parse_scannings(line):
                 
         if (station != "" and pwr != "" and bssid != ""):
             request_data = { 'network_id': nwid, 'pwr':pwr, 'station': station }
-            request = requests.post(urlsignal, request_data)
-            # print(request_data)
+            # request = requests.post(urlsignal, request_data)
+            print(request_data)
             parsed_stations.append({ 'network_id': nwid, 'pwr':pwr, 'station': station })
             bssid = ""
             station = ""
