@@ -36,17 +36,18 @@ def parse_scannings():
                 i += 15
                 print(bssid)
                 
-            if (line[i] == ":" and station == "" ):
+            if (line[i] == ":" and station == "" and bssid != ""):
                 temp = line[i-2: i+15]
                 # if (bssid == "" and not (" " in temp)):
                 #     bssid = temp
                 #     i += 14
                 #     break
                 # if (bssid != ""):
-                # if ( not (" " in temp)):
-                station = temp
-                i += 14
+                if ( not (" " in temp)):
+                    station = temp
+                    i += 14
                 print( station)
+
             if (line[i] == "-" and (pwr == "")):
                 if not (" " in line[i+1] ):
                     pwr = line[i: i+3]
@@ -58,7 +59,7 @@ def parse_scannings():
                 bssid = ""
                 station = ""
                 pwr = ""
-        # print (parsed_stations)
+    print (parsed_stations)
             
             
             
