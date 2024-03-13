@@ -20,7 +20,7 @@ def get_nwid(response):
     if nwid_response.status_code == 200:
         # Extract the JSON data from the response
         return nwid_response.json()
-    else 
+    else: 
         return 0
 
 
