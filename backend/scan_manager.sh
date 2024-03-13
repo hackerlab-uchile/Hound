@@ -7,7 +7,7 @@ mkfifo signalpipe
 ## calling the airodump instance and the function to get the data from the pipe
 
 nohup expect scan_manager.exp &
-nohup python -c 'import scan_manager; scan_manager.get_scannings()' &
+python -c 'import scan_manager; scan_manager.get_scannings()' &
 # 
 
 
