@@ -15,7 +15,7 @@ urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 nwid = requests.get(urlnwid)
 
 def run_script():
-    subprocess.call(['sh', script_path])
+    subprocess.call(['sudo', 'sh', script_path])
 
 
 def get_scannings():
