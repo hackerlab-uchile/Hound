@@ -12,7 +12,7 @@ tmux send -Rt 0 cd SPACE backend ENTER
 
 tmux send -Rt 0 expect SPACE scan_manager.exp ENTER
  
-python -c 'import scan_manager; scan_manager.get_scanings()'
+python -c 'import scan_manager; scan_manager.get_scannings()'
 
 
 # 
