@@ -2,7 +2,7 @@
 
 
 # Run airodump-ng and wait for it to start
-spawn bash -c "airodump-ng wlan1 | tee signalpipe monitor.txt"
+spawn bash -c "airodump-ng wlan1 | tee signalpipe monitor.txt > /dev/null"
 expect "airodump-ng"
 
 
