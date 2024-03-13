@@ -16,7 +16,7 @@ urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 def get_nwid(response):
     if nwid_response.status_code == 200:
         # Extract the JSON data from the response
-        return nwid_response.json()
+        return response.json()
     else: 
         return 0
 
