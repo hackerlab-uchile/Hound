@@ -27,4 +27,42 @@ const sendLocationData = async (locationData) => {
     }
 };
 
-export { sendLocationData };
+
+// Sends the instruction to start the scan to the fastapi endpoints
+const startScan = async () => {
+    try {
+        // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
+        const response = await fetch('https://10.42.0.1/api/start_signal_scan', {
+        method: "POST",  
+        });
+        if (!response.ok) {
+            throw new Error('Failed to send data');
+        }
+
+        const responseData = await response.json();
+        console.log('Response from FastAPI:', responseData);
+    } catch (error) {
+        console.error('Error sending data:', error);
+    }
+};
+
+
+// Sends the instruction to stop the scan of fastapi endpoints
+const stopScan = async () => {
+    try {
+        // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
+        const response = await fetch('https://10.42.0.1/api/stop_signal_scan', {
+        method: "POST",  
+        });
+        if (!response.ok) {
+            throw new Error('Failed to send data');
+        }
+
+        const responseData = await response.json();
+        console.log('Response from FastAPI:', responseData);
+    } catch (error) {
+        console.error('Error sending data:', error);
+    }
+};
+
+export { sendLocationData, startScan, stopScan};

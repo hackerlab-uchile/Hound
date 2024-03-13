@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Accelerometer from '../position/accelerometer';
+import { startScan } from '../position/endpoints';
 // import MovementPlot from '../components/movement_graph';
 import StopScan from './stop_scan'
 
@@ -27,11 +28,15 @@ class BeginScan extends React.Component{
         }));
     }
 
+    handleClick = () => {
+        this.toggleStopButton()
+        startScan();
+      };
 
     render(){
         return(
             <>
-                <Button className="btn" onClick={() => {this.toggleStopButton()}} visibility = {!this.state.hidden}>
+                <Button className="btn" onClick={() => {this.handleClick()}} visibility = {!this.state.hidden}>
                 Begin Scan
                 </Button>
                 {(this.state.hidden)? <Accelerometer/> : <></>}

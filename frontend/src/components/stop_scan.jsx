@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Accelerometer from '../position/accelerometer';
 import MovementPlot from '../components/movement_graph';
 import BeginScan from "./begin_scan";
+import { stopScan } from '../position/endpoints';
 
 const Button = styled.button`
 padding: 15px;
@@ -28,7 +29,7 @@ class StopScan extends React.Component {
     render(){
         return(
             <>
-                <Button className="btn" hidden = {this.props.hidden} onClick= {() => {this.props.toggleStopButton(); this.showMovementPlot();}} visibility = {this.props.hidden}>
+                <Button className="btn" hidden = {this.props.hidden} onClick= {() => {this.props.toggleStopButton(); this.showMovementPlot(); stopScan()}} visibility = {this.props.hidden}>
                 Stop Scan
                 </Button>
                 {/* TODO: hacer que se muestre solo despues de haber apretado stop */}
