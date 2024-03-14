@@ -32,8 +32,8 @@ def get_response():
         nwid_response = get_nwid(requests.get(urlnwid))
         return nwid
     
-
-
+nwid_response = get_nwid(requests.get(urlnwid))
+nwid = nwid_response
 
 
 

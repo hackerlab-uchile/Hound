@@ -6,7 +6,7 @@ function MovementPlot() {
 
 
     useEffect(() => {
-        fetch('http://localhost:8000/locations/get/')
+        fetch('https://10.42.0.1/api/locations/get/')
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => console.error('Error fetching data:', error));
