@@ -5,12 +5,16 @@ from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, Field
 from datetime import datetime
 from database import engine_location, engine_signal, engine_network, SessionLocalLocation, SessionLocalSignal, SessionLocalNetwork
-from sqlalchemy.orm import Session
-from sqlalchemy import select, desc
+from sqlalchemy.orm import Session, relationship
+from sqlalchemy import select, desc,  and_
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 
-app = FastAPI(root_path = '/api/')
+# indicates if the app is on a development enviroment
+
+
+# app = FastAPI(root_path = '/api/')
+app = FastAPI()
 
 # origins = [
 #     "http://localhost",
@@ -163,4 +167,12 @@ def start_scanning():
 def stop_scanning():
     scan_manager.stop_script()
 
+@app.get('/get_joint_data')
+async def get_joint_data(db1: Session = Depends(get_locations_db), db2: Session = Depends(get_signals_db), db: Session = Depends(get_networks_db)):
+    nwid = db.execute(db.query(models.NetworkScans).order_by(desc(models.NetworkScans.id)).limit(1)).scalar()
+
+    joined_data = db1.query(models.LocationScans, models.SignalScans).\
+        join(models.SignalScans, and_(models.LocationScans.network_scan_id == models.SignalScans.network_scan_id, models.LocationScans.location_started_at == models.SignalScans.signal_started_at)).\
+        all()
+    return joined_data
 

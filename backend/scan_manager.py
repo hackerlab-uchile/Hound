@@ -11,7 +11,11 @@ file = open('monitor.txt', 'w')
 array_stations = []
 parsed_stations = []
 urlsignal = "https://10.42.0.1/api/signals/create/"
+
+is_on_development = False
+
 urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
+
 
 def get_nwid(response):
     if response.status_code == 200:
@@ -20,9 +24,16 @@ def get_nwid(response):
     else: 
         return 0
 
+def get_response():
+    if(is_on_development):
+        nwid_response = get_nwid(requests.get("http://localhost:8000/networks/get_last_id/"))
+        return nwid_response
+    else:
+        nwid_response = get_nwid(requests.get(urlnwid))
+        return nwid
+    
 
-nwid_response = get_nwid(requests.get(urlnwid))
-nwid = nwid_response
+
 
 
 
@@ -33,6 +44,7 @@ def stop_script():
     subprocess.call(['sudo', 'sh', stop_path])
 
 def get_scannings():
+    nwid = get_response()
     print("Waiting initialization ...")
     time.sleep(17)
     print("Listening pipe")
