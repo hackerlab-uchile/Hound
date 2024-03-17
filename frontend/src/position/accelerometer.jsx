@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-
+import moment from 'moment';
 import { toPosition, sum3d, locationMean } from './posCalculation';
 import { sendLocationData } from './endpoints';
 
@@ -7,6 +7,9 @@ function Accelerometer() {
 
   // max data load after sending the data 
   const payload = 100;
+
+  const location_data_per_second = 10; //eliminar 90 datos del acelerometro para reducir el payload
+
   const [isFinished, setIsFinished] = useState(false)
   // scan state: 0 -> finished ; 1 -> on progress
   const [scanState, setScanState] = useState([0]);
@@ -37,6 +40,9 @@ function Accelerometer() {
   });
   const [locationArray, setLocationArray] = useState([])
   const [counter, setCounter] = useState(0);
+
+  //timedelta
+
 
   // gets the network scan id to assign the new location instance to a new network scan. 
   // Gets the data of the last Network scan id and sets the current nw scan
@@ -99,7 +105,7 @@ function Accelerometer() {
     setZ(roundAcc(event.acceleration.z));
     
     // setFirstInterval(currentTime);
-    // setCurrentTime(Date.now());
+    setCurrentTime(currentTime.now());
     // setTimeElapsed((currentTime - firstInterval)/1000);
   }
 
@@ -114,7 +120,8 @@ function Accelerometer() {
       network_scan_id: currentNetworkScanId,
       x: currentPosition[0],
       y: currentPosition[1],
-      z: currentPosition[2]
+      z: currentPosition[2], 
+      location_started_at: moment(currentTime).format('YYYY-MM-DDTHH:mm:ss')
     });
   }
 
@@ -162,6 +169,7 @@ function handleLocationChanges(){
           <p>X: {currentPosition[0]}</p>
           <p>Y: {currentPosition[1]}</p>
           <p>Z: {currentPosition[2]}</p>
+          <p>Z: {moment(currentTime).format('YYYY-MM-DDTHH:mm:ss')}</p>
         </>
       
       ) : (

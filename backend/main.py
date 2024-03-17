@@ -13,8 +13,8 @@ from typing import List
 # indicates if the app is on a development enviroment
 
 
-app = FastAPI(root_path = '/api/')
-# app = FastAPI()
+# app = FastAPI(root_path = '/api/')
+app = FastAPI()
 
 # origins = [
 #     "http://localhost",
@@ -68,15 +68,17 @@ class LocationScan(BaseModel):
     x: float = Field(gt=-1000001, lt=1000001)
     y: float = Field(gt=-1000001, lt=1000001)
     z: float = Field(gt=-1000001, lt=1000001)
+    location_started_at: datetime = None
 
 class SignalScan(BaseModel):
     network_scan_id: int = Field(gt=-1, lt=101)
     station: str = None
     pwr: float = Field(gt=-101, lt=101)
+    signal_started_at: datetime = None
 
 class LocationsList(BaseModel):
     locations: List[LocationScan]
-
+    
 #Routes
 
 
@@ -169,7 +171,7 @@ def stop_scanning():
 
 @app.get('/get_joint_data')
 async def get_joint_data(db1: Session = Depends(get_locations_db), db2: Session = Depends(get_signals_db), db: Session = Depends(get_networks_db)):
-    nwid = db.execute(db.query(models.NetworkScans).order_by(desc(models.NetworkScans.id)).limit(1)).scalar()
+    nwid = db.execute(db.query(models.NetworkScans).order_by(desc(models.NetworkScans.id)).limit(1)).scalar()#max
 
     joined_data = db1.query(models.LocationScans, models.SignalScans).\
         join(models.SignalScans, and_(models.LocationScans.network_scan_id == models.SignalScans.network_scan_id, models.LocationScans.location_started_at == models.SignalScans.signal_started_at)).\
