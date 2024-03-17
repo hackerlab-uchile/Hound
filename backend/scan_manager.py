@@ -2,6 +2,7 @@ import time
 import requests
 import json
 import subprocess 
+from datetime import datetime
 
 fifo_pipe = 'signalpipe'
 manager_path = './scan_manager.sh'
@@ -13,6 +14,7 @@ parsed_stations = []
 urlsignal = "https://10.42.0.1/api/signals/create/"
 
 is_on_development = False
+now = datetime.now()
 
 urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 
