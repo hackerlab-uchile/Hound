@@ -105,7 +105,7 @@ function Accelerometer() {
     setZ(roundAcc(event.acceleration.z));
     
     // setFirstInterval(currentTime);
-    setCurrentTime(currentTime.now());
+    
     // setTimeElapsed((currentTime - firstInterval)/1000);
   }
 
@@ -146,6 +146,7 @@ function handleLocationChanges(){
     setCounter(counter + 1);
     handleLocationChanges();
     console.log('counter', counter);
+    setCurrentTime(currentTime.now());
   }, [x, y, z]);
 
   

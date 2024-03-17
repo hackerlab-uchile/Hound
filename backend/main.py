@@ -13,8 +13,8 @@ from typing import List
 # indicates if the app is on a development enviroment
 
 
-app = FastAPI(root_path = '/api/')
-# app = FastAPI()
+# app = FastAPI(root_path = '/api/')
+app = FastAPI()
 
 # origins = [
 #     "http://localhost",

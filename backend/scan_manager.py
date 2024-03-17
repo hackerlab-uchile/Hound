@@ -93,7 +93,7 @@ def parse_scannings(line):
             request_data = { 'network_scan_id': nwid, 'station': station, 'pwr':pwr }
             request = requests.post(urlsignal, json.dumps(request_data))
             print(request_data)
-            parsed_stations.append({ 'network_id': nwid, 'station': station, 'pwr':pwr })
+            parsed_stations.append({ 'network_id': nwid, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%d/%m/%YT%H:%M:%S") })
             bssid = ""
             station = ""
             pwr = ""
