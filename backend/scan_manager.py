@@ -17,23 +17,23 @@ is_on_development = False
 urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 
 
-# def get_nwid(response):
-#     if response.status_code == 200:
-#         # Extract the JSON data from the response
-#         return response.json()
-#     else: 
-#         return 0
+def get_nwid(response):
+    if response.status_code == 200:
+        # Extract the JSON data from the response
+        return response.json()
+    else: 
+        return 0
 
-# def get_response():
-#     if(is_on_development):
-#         nwid_response = get_nwid(requests.get("http://localhost:8000/networks/get_last_id/"))
-#         return nwid_response
-#     else:
-#         nwid_response = get_nwid(requests.get(urlnwid))
-#         return nwid
+def get_response():
+    if(is_on_development):
+        nwid_response = get_nwid(requests.get("http://localhost:8000/networks/get_last_id/"))
+        return nwid_response
+    else:
+        nwid_response = get_nwid(requests.get(urlnwid))
+        return nwid
     
-# nwid_response = get_nwid(requests.get(urlnwid))
-# nwid = nwid_response
+nwid_response = get_nwid(requests.get(urlnwid))
+nwid = nwid_response
 
 
 
