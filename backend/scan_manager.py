@@ -12,6 +12,7 @@ file = open('monitor.txt', 'w')
 array_stations = []
 parsed_stations = []
 urlsignal = "https://10.42.0.1/api/signals/create/"
+urlfirstsignal = "https://10.42.0.1/api/first_signal_scan"
 
 is_on_development = False
 now = datetime.now()
@@ -95,6 +96,8 @@ def parse_scannings(line):
         
         if(i == 0):
             first_signal_started_at = now.strftime("%d/%m/%YT%H:%M:%S")
+            requests.post(urlfirstsignal, data=first_signal_started_at)
+            
 
         if (station != "" and pwr != "" and bssid != ""):
             request_data = { 'network_scan_id': nwid+1, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%Y-%m-%dT%H:%M:%S") }

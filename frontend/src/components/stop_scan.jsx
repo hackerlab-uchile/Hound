@@ -7,7 +7,7 @@ import { stopScan, sendNetworkData } from '../position/endpoints';
 import { getTimeLocations } from '../position/posCalculation'
 
 const Button = styled.button`
-padding: 15px;
+padding: 20px;
 color: #ad77e0;
 display: ${props => props.visibility? 'inline': 'none'}
 `;

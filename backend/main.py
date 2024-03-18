@@ -35,6 +35,9 @@ models.Base.metadata.create_all(bind=engine_signal)
 models.Base.metadata.create_all(bind=engine_network)
 
 
+#global variables
+first_signal_scan_time
+
 # database getters
 def get_locations_db():
     db = SessionLocalLocation
@@ -88,7 +91,7 @@ class LocationsList(BaseModel):
 def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks_db)):
     network_scan_model = models.NetworkScans()
     # network_scan_model.status = network_scan.status
-    # network_scan_model.signal_started_at = scan_manager.get_first_signal_time()
+    network_scan_model.signal_started_at = first_signal_scan_time
     network_scan_model.location_started_at = network_scan.location_started_at
 
     db.add(network_scan_model)
@@ -169,6 +172,11 @@ def start_scanning():
 @app.post('/stop_signal_scan')
 def stop_scanning():
     scan_manager.stop_script()
+
+# Function dedicated to send the start instruction to the other 
+@app.post('/first_signal_scan')
+def get_first_signal(data: 'str'):
+    first_signal_scan_time = data
 
 
 

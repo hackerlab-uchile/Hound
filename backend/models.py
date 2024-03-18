@@ -11,7 +11,7 @@ class NetworkScans(Base):
 
     id = Column(Integer, primary_key = True, index = True)
     # status = Column(Integer)
-    signal_started_at = Column(DateTime, default=scan_manager.get_first_signal_time()) 
+    signal_started_at = Column(DateTime) 
     location_started_at = Column(DateTime)   
 
 
