@@ -29,7 +29,7 @@ const Load = () => {
 
         ) : (
         <>
-          <Text> Camine por la habitación </Text>
+          <Text> Muevase por la habitación... </Text>
           <Accelerometer/>
         </>
 

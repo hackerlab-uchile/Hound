@@ -189,12 +189,12 @@ function Accelerometer() {
     <>
       {permissionGranted ? (
         <>
-          <MiniTitle>X: </MiniTitle>
-          <Text>{currentPosition[0]}</Text>
-          <MiniTitle>Y:</MiniTitle>
-          <Text>{currentPosition[1]}</Text>
+          <MiniTitle>Desplazamiento horizontal: </MiniTitle>
+          <Text>{currentPosition[0]} [m]</Text>
+          <MiniTitle>Desplazamiento Vertical: </MiniTitle>
+          <Text>{currentPosition[1]} [m] </Text>
 
-          <MiniTitle>nwscan id: </MiniTitle>
+          <MiniTitle>Número de escaneo: </MiniTitle>
           <Text >{currentNetworkScanId}</Text>
 
         </>

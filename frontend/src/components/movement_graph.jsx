@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
+import styled from "styled-components";
+
+
+const Container = styled.div`
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto;
+`;
+
+
 
 function MovementPlot() {
     const [data, setData] = useState([]);
@@ -46,12 +56,15 @@ function MovementPlot() {
     }];
 
     return (
+      <Container>
         <div className="MovementPlot">
           <Plot
             data={plotData}
             layout={{ title: 'Positions' }}
           />
         </div>
+      </Container>
+
       ); 
 }
 

@@ -7,16 +7,21 @@ import BeginScan from './components/begin_scan';
 const Title = styled.h1`
   font-family: Helvetica;
   text-align: center;
-  color: #533263; 
+  color: white; 
+  background-color: #7d4a96;
+  margin-top: 0;
+  padding: 15px;
 `;
 
 const App = () => {
 
   return (
-    <div className="App">
+
+    <div  className="App">
       <Title>Hound</Title>
       <BeginScan/>
     </div>
+
   );
 }
 
