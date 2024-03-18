@@ -13,7 +13,7 @@ parsed_stations = []
 urlsignal = "https://10.42.0.1/api/signals/create/"
 urlfirstsignal = "https://10.42.0.1/api/first_signal_scan"
 
-is_on_development = False
+is_empty = True
 now = datetime.now()
 
 first_signal_started_at = ""
@@ -48,7 +48,6 @@ def stop_script():
     subprocess.call(['sudo', 'sh', stop_path])
 
 def get_scannings():
-    count = 0
     # nwid = get_response()
     print("Waiting initialization ...")
     time.sleep(17)
@@ -59,10 +58,9 @@ def get_scannings():
             if not line:
                 break
             # array_stations.append(str(line))
-            parse_scannings(str(line), count)
-            count =+ 1
+            parse_scannings(str(line))
 
-def parse_scannings(line, count):
+def parse_scannings(line):
     # for j in range (0,len(array_stations)):
     # line = array_stations[j]
     i=-1
@@ -102,10 +100,11 @@ def parse_scannings(line, count):
             request_data = { 'network_scan_id': nwid+1, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%Y-%m-%dT%H:%M:%S") }
             request = requests.post(urlsignal, json.dumps(request_data))
             
-            if(count == 0):
-                requests.post(urlfirstsignal, data=now.strftime("%d/%m/%YT%H:%M:%S"))
+            if(is_empty):
+                requests.post(urlfirstsignal, now.strftime("%d/%m/%YT%H:%M:%S"))
                 print (now.strftime("%d/%m/%YT%H:%M:%S"))
-                
+                is_empty = False
+
             print(request_data)
             bssid = ""
             station = ""
