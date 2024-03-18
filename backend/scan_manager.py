@@ -17,8 +17,7 @@ urlfirstsignal = "https://10.42.0.1/api/first_signal_scan"
 is_on_development = False
 now = datetime.now()
 
-first_signal_started_at = ''
-counter = 0
+first_signal_started_at = ""
 
 urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 
@@ -103,11 +102,10 @@ def parse_scannings(line):
             request = requests.post(urlsignal, json.dumps(request_data))
             
             if(counter == 0):
-                
                 requests.post(urlfirstsignal, data=now.strftime("%d/%m/%YT%H:%M:%S"))
-                print (first_signal_started_at)
+                print (now.strftime("%d/%m/%YT%H:%M:%S"))
             print(request_data)
-            counter += 1
+            count =+ 1
             bssid = ""
             station = ""
             pwr = ""
