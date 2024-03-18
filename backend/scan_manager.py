@@ -97,7 +97,7 @@ def parse_scannings(line):
             first_signal_started_at = now.strftime("%d/%m/%YT%H:%M:%S")
 
         if (station != "" and pwr != "" and bssid != ""):
-            request_data = { 'network_scan_id': nwid, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%d-%m-%YT%H:%M:%S") }
+            request_data = { 'network_scan_id': nwid, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%Y-%m-%dT%H:%M:%S") }
             request = requests.post(urlsignal, json.dumps(request_data))
             print(request_data)
 
