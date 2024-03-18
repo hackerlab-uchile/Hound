@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Load from "./load";
 import Accelerometer from '../position/accelerometer';
 import { startScan } from '../position/endpoints';
 // import MovementPlot from '../components/movement_graph';
@@ -8,9 +9,12 @@ import StopScan from './stop_scan'
 const Button = styled.button`
 padding: 15px;
 margin: auto;
-color: #ad77e0;
+color: #ffffff
+background-color: #008CBA;
 display: ${props => props.visibility? 'inline': 'none'}
 `;
+
+
 
 class BeginScan extends React.Component{
     constructor(props){
@@ -39,7 +43,7 @@ class BeginScan extends React.Component{
                 <Button className="btn" onClick={() => {this.handleClick()}} visibility = {!this.state.hidden}>
                 Begin Scan
                 </Button>
-                {(this.state.hidden)? <Accelerometer/> : <></>}
+                {(this.state.hidden)? <Load/> : <></>}
                 < StopScan hidden = {this.state.hidden} toggleStopButton = {this.toggleStopButton}/>
                 
             </>
