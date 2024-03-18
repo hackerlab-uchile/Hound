@@ -106,7 +106,7 @@ def parse_scannings(line):
                 counter += 1
                 first_signal_started_at = now.strftime("%d/%m/%YT%H:%M:%S")
                 requests.post(urlfirstsignal, data=first_signal_started_at)
-                print ()first_signal_started_at
+                print (first_signal_started_at)
             print(request_data)
 
             bssid = ""
