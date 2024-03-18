@@ -20,7 +20,7 @@ first_signal_started_at = ''
 
 urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
 
-def get_response(response):
+def get_res(response):
     if response.status_code == 200:
         # Extract the JSON data from the response
         return response.json()
@@ -29,13 +29,13 @@ def get_response(response):
 
 # def get_nwid():
 #     if(is_on_development):
-#         nwid_response = get_response(requests.get("http://localhost:8000/networks/get_last_id/"))
+#         nwid_response = get_res(requests.get("http://localhost:8000/networks/get_last_id/"))
 #         return nwid_response
 #     else:
-#         nwid_response = get_response(requests.get(urlnwid))
+#         nwid_response = get_res(requests.get(urlnwid))
 #         return nwid_response
     
-nwid_response = get_response(requests.get(urlnwid))
+nwid_response = get_res(requests.get(urlnwid))
 nwid = nwid_response
 
 def get_first_signal_time():
@@ -48,7 +48,7 @@ def stop_script():
     subprocess.call(['sudo', 'sh', stop_path])
 
 def get_scannings():
-    nwid = get_response()
+    # nwid = get_response()
     print("Waiting initialization ...")
     time.sleep(17)
     print("Listening pipe")
