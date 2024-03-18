@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-// Global const
-const firstTimeLocations = null
+// Global var
+let firstTimeLocations = ""
 
 
 // usable functions
