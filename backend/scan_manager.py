@@ -102,7 +102,8 @@ def parse_scannings(line):
             request = requests.post(urlsignal, json.dumps(request_data))
             
             if(is_empty):
-                response = requests.post(urlfirstsignal, data=str(signal_started_at))
+                print(signal_started_at)
+                response = requests.post(urlfirstsignal, {'data': signal_started_at})
                 print (response.json())
                 is_empty = False
 
