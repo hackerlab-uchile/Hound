@@ -48,6 +48,7 @@ def stop_script():
     subprocess.call(['sudo', 'sh', stop_path])
 
 def get_scannings():
+    count = 0
     # nwid = get_response()
     print("Waiting initialization ...")
     time.sleep(17)
@@ -58,7 +59,8 @@ def get_scannings():
             if not line:
                 break
             # array_stations.append(str(line))
-            parse_scannings(str(line), 0)
+            parse_scannings(str(line), count)
+            count =+ 1
 
 def parse_scannings(line, count):
     # for j in range (0,len(array_stations)):
@@ -104,7 +106,6 @@ def parse_scannings(line, count):
                 requests.post(urlfirstsignal, data=now.strftime("%d/%m/%YT%H:%M:%S"))
                 print (now.strftime("%d/%m/%YT%H:%M:%S"))
             print(request_data)
-            count =+ 1
             bssid = ""
             station = ""
             pwr = ""
