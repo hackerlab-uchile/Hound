@@ -105,6 +105,7 @@ def parse_scannings(line, count):
             if(count == 0):
                 requests.post(urlfirstsignal, data=now.strftime("%d/%m/%YT%H:%M:%S"))
                 print (now.strftime("%d/%m/%YT%H:%M:%S"))
+                
             print(request_data)
             bssid = ""
             station = ""
