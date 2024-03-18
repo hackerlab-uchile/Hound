@@ -7,10 +7,9 @@ import { startScan } from '../position/endpoints';
 import StopScan from './stop_scan'
 
 const Button = styled.button`
-padding: 15px;
+padding: 20px;
 margin: auto;
-color: #ffffff
-background-color: #008CBA;
+color: #ad77e0;
 display: ${props => props.visibility? 'inline': 'none'}
 `;
 

@@ -88,9 +88,9 @@ class LocationsList(BaseModel):
 def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks_db)):
     network_scan_model = models.NetworkScans()
     # network_scan_model.status = network_scan.status
-    network_scan_model.signal_started_at = scan_manager.get_first_signal_time()
+    # network_scan_model.signal_started_at = scan_manager.get_first_signal_time()
     network_scan_model.location_started_at = network_scan.location_started_at
-    
+
     db.add(network_scan_model)
     db.commit()
     return network_scan

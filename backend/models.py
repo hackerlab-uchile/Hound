@@ -2,14 +2,16 @@ from sqlalchemy import Column, Integer, String, DateTime, Float
 from database import Base
 from sqlalchemy.sql import func
 from datetime import datetime
+import scan_manager
+
 
 # NetworkScan contains scanning instances (envelops the instances of LocationScans and SignalScans) 
 class NetworkScans(Base):
     __tablename__ = "network_scans"
 
     id = Column(Integer, primary_key = True, index = True)
-    status = Column(Integer)
-    signal_started_at = Column(DateTime) 
+    # status = Column(Integer)
+    signal_started_at = Column(DateTime, default=scan_manager.get_first_signal_time()) 
     location_started_at = Column(DateTime)   
 
 
@@ -32,4 +34,4 @@ class LocationScans(Base):
     x = Column(Float)
     y = Column(Float)
     z = Column(Float)
-    location_started_at = Column(DateTime, server_default=func.now())  
+    location_started_at = Column(DateTime)  
