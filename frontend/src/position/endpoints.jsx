@@ -1,3 +1,14 @@
+import { useState } from "react";
+
+// Global const
+const [firstTimeLocations, setFirstTimeLocations] = useState(null)
+
+
+// usable functions
+
+function setTimeLocations(datetime){
+    setFirstTimeLocations(datetime);
+}
 
 
 ////////// Endpoints POST connections ///////////
@@ -46,6 +57,23 @@ const startScan = async () => {
     }
 };
 
+const sendDatestoNwScan = async () => {
+    try {
+        // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
+        const response = await fetch('https://10.42.0.1/api/set_first_signal_time', {
+        method: "POST",  
+        });
+        if (!response.ok) {
+            throw new Error('Failed to send data');
+        }
+
+        const responseData = await response.json();
+        console.log('Response from FastAPI:', responseData);
+    } catch (error) {
+        console.error('Error sending data:', error);
+    }
+};
+
 
 // Sends the instruction to stop the scan of fastapi endpoints
 const stopScan = async () => {
@@ -65,4 +93,28 @@ const stopScan = async () => {
     }
 };
 
-export { sendLocationData, startScan, stopScan};
+
+// Sends the nw data to the fastapi endpoints
+const sendNetworkData = async () => {
+    try {
+        // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
+        const response = await fetch('https://10.42.0.1/api/networks/create/', {
+        // const response = await fetch('http://localhost:8000/locations/create/', {
+        method: "POST",  
+        body: JSON.stringify({ 'locations': firstTimeLocations }),
+        headers: {
+        "Content-Type": "application/json",
+        },
+        });
+        if (!response.ok) {
+        throw new Error('Failed to send data');
+        }
+
+        const responseData = await response.json();
+        console.log('Response from FastAPI:', responseData);
+    } catch (error) {
+        console.error('Error sending data:', error);
+    }
+};
+
+export { sendLocationData, startScan, stopScan, sendDatestoNwScan, getTimeLocations, setTimeLocations};

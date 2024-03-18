@@ -16,28 +16,32 @@ urlsignal = "https://10.42.0.1/api/signals/create/"
 is_on_development = False
 now = datetime.now()
 
+first_signal_started_at
+
 urlnwid = "https://10.42.0.1/api/networks/get_last_id/"
+url_first_signal_date = "https://10.42.0.1/api/set_first_signal_time" 
 
 
-def get_nwid(response):
+def get_response(response):
     if response.status_code == 200:
         # Extract the JSON data from the response
         return response.json()
     else: 
         return 0
 
-def get_response():
-    if(is_on_development):
-        nwid_response = get_nwid(requests.get("http://localhost:8000/networks/get_last_id/"))
-        return nwid_response
-    else:
-        nwid_response = get_nwid(requests.get(urlnwid))
-        return nwid
+# def get_nwid():
+#     if(is_on_development):
+#         nwid_response = get_response(requests.get("http://localhost:8000/networks/get_last_id/"))
+#         return nwid_response
+#     else:
+#         nwid_response = get_response(requests.get(urlnwid))
+#         return nwid_response
     
-nwid_response = get_nwid(requests.get(urlnwid))
+nwid_response = get_response(requests.get(urlnwid))
 nwid = nwid_response
 
-
+def get_first_signal_time():
+    return first_signal_started_at
 
 def run_script():
     subprocess.call(['sudo', 'sh', manager_path])
@@ -92,10 +96,10 @@ def parse_scannings(line):
                 i += 2
                 
         if (station != "" and pwr != "" and bssid != ""):
-            request_data = { 'network_scan_id': nwid, 'station': station, 'pwr':pwr }
+            request_data = { 'network_scan_id': nwid, 'station': station, 'pwr':pwr,'signal_started_at': now.strftime("%d/%m/%YT%H:%M:%S") }
             request = requests.post(urlsignal, json.dumps(request_data))
-            print(request_data)
-            parsed_stations.append({ 'network_id': nwid, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%d/%m/%YT%H:%M:%S") })
+            if(i == 0):
+                first_location_started_at = request_data.signal_started_at
             bssid = ""
             station = ""
             pwr = ""

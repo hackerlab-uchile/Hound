@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Accelerometer from '../position/accelerometer';
 import MovementPlot from '../components/movement_graph';
 import BeginScan from "./begin_scan";
-import { stopScan } from '../position/endpoints';
+import { stopScan, sendDatestoNwScan } from '../position/endpoints';
+import { getTimeLocations } from '../position/posCalculation'
 
 const Button = styled.button`
 padding: 15px;
@@ -26,13 +27,22 @@ class StopScan extends React.Component {
         }));
     }
 
+    handleClick = () => {
+        this.props.toggleStopButton();
+        this.showMovementPlot();
+        sendDatestoNwScan();
+        stopScan();
+    };
+
     render(){
         return(
             <>
-                <Button className="btn" hidden = {this.props.hidden} onClick= {() => {this.props.toggleStopButton(); this.showMovementPlot(); stopScan()}} visibility = {this.props.hidden}>
+                {/* Mandar data de scan y mandar instruccion para extraer la primera fecha de signal scan, luego llamar al create nw scan*/}
+                <Button className="btn" hidden = {this.props.hidden} onClick= {() => {this.handleClick()}} visibility = {this.props.hidden}>
                 Stop Scan
                 </Button>
                 {/* TODO: hacer que se muestre solo despues de haber apretado stop */}
+                
                 {(this.state.finished)? <MovementPlot/> : <></>}
             </>
         );

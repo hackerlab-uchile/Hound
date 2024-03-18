@@ -34,6 +34,7 @@ models.Base.metadata.create_all(bind=engine_location)
 models.Base.metadata.create_all(bind=engine_signal)
 models.Base.metadata.create_all(bind=engine_network)
 
+
 # database getters
 def get_locations_db():
     db = SessionLocalLocation
@@ -86,8 +87,8 @@ class LocationsList(BaseModel):
 @app.post('/networks/create/')
 def create_network(network_scan: NetworkScan, db: Session = Depends(get_networks_db)):
     network_scan_model = models.NetworkScans()
-    network_scan_model.status = network_scan.status
-    network_scan_model.signal_started_at = network_scan.signal_started_at
+    # network_scan_model.status = network_scan.status
+    network_scan_model.signal_started_at = network_scan.scan_manager.get_first_signal_time()
     network_scan_model.location_started_at = network_scan.location_started_at
 
     db.add(network_scan_model)
@@ -169,6 +170,9 @@ def start_scanning():
 def stop_scanning():
     scan_manager.stop_script()
 
+
+
+
 @app.get('/get_joint_data')
 async def get_joint_data(db1: Session = Depends(get_locations_db), db2: Session = Depends(get_signals_db), db: Session = Depends(get_networks_db)):
     nwid = db.execute(db.query(models.NetworkScans).order_by(desc(models.NetworkScans.id)).limit(1)).scalar()#max
@@ -177,4 +181,11 @@ async def get_joint_data(db1: Session = Depends(get_locations_db), db2: Session 
         join(models.SignalScans, and_(models.LocationScans.network_scan_id == models.SignalScans.network_scan_id, models.LocationScans.location_started_at == models.SignalScans.signal_started_at)).\
         all()
     return joined_data
+
+
+
+
+
+
+
 

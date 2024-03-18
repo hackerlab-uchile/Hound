@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useReducer } from "react";
 import moment from 'moment';
 import { toPosition, sum3d, locationMean } from './posCalculation';
-import { sendLocationData } from './endpoints';
+import { sendLocationData, setTimeLocations } from './endpoints';
 
 function Accelerometer() {
 
@@ -28,6 +28,9 @@ function Accelerometer() {
   const [timeElapsed, setTimeElapsed] = useState(null);
 
   const [currentPosition, setCurrentPosition] = useState([0,0,0]);
+
+  // regulates the first data of the localization scan
+  const [firstTime, setFirstTime] = useState(null);
 
   const [firstInterval, setFirstInterval] = useState(Date.now());
   const [currentTime, setCurrentTime] = useState(Date.now()); 
@@ -125,21 +128,26 @@ function Accelerometer() {
     });
   }
 
-function handleLocationChanges(){
-  //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
-  // generateRandomNumber();
-  setPositions();
-  console.log('location_data', locationData);
-  const newArr = [...locationArray, locationData];
-  setLocationArray(newArr);
-  if (counter >= payload || isFinished){
-    console.log('loc array', locationArray);
-    sendLocationData(locationArray);
-    setLocationArray([]);
-    setCounter(0);
+
+
+  function handleLocationChanges(){
+    //CAMBIAR MOCK DATA!! (mockX, mockY, mockZ por x,y,z. Borrar generateRandomNumber y todos los set para el calculo de posicion
+    // generateRandomNumber();
+    setPositions();
+    console.log('location_data', locationData);
+    const newArr = [...locationArray, locationData];
+    setLocationArray(newArr);
+    if (counter >= payload || isFinished){
+      console.log('loc array', locationArray);
+      sendLocationData(locationArray);
+      setLocationArray([]);
+      setCounter(0);
+    }
   }
 
-}
+  useEffect(()=>{
+    setTimeLocations(moment(currentTime).format('YYYY-MM-DDTHH:mm:ss'));
+  }, [])
   
 
   useEffect(() => {
@@ -169,7 +177,7 @@ function handleLocationChanges(){
           <p>X: {currentPosition[0]}</p>
           <p>Y: {currentPosition[1]}</p>
           <p>Z: {currentPosition[2]}</p>
-          <p>Z: {moment(currentTime).format('YYYY-MM-DDTHH:mm:ss')}</p>
+          <p>nwscan id: {currentNetworkScanId}</p>
         </>
       
       ) : (
