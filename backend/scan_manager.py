@@ -68,7 +68,7 @@ def parse_scannings(line):
     station = ""
     pwr = ""
     while i<(len(line)-1) :
-
+        global is_empty
         i+=1
         # if (str(line)[i] != " "):
         #     print(str(line)[i])
@@ -100,10 +100,10 @@ def parse_scannings(line):
             request_data = { 'network_scan_id': nwid+1, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%Y-%m-%dT%H:%M:%S") }
             request = requests.post(urlsignal, json.dumps(request_data))
             
-            if(global is_empty):
+            if(is_empty):
                 requests.post(urlfirstsignal, now.strftime("%d/%m/%YT%H:%M:%S"))
                 print (now.strftime("%d/%m/%YT%H:%M:%S"))
-                global is_empty = False
+                is_empty = False
 
             print(request_data)
             bssid = ""
