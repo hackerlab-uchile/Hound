@@ -2,6 +2,14 @@ import React, { useEffect, useState, useReducer } from "react";
 import moment from 'moment';
 import { toPosition, sum3d, locationMean } from './posCalculation';
 import { sendLocationData, setTimeLocations } from './endpoints';
+import styled from "styled-components";
+
+const Text = styled.p`
+  font-family: Helvetica;
+  text-align: center;
+  color: #8e59a8;
+`;
+
 
 function Accelerometer() {
 
@@ -174,10 +182,14 @@ function Accelerometer() {
     <>
       {permissionGranted ? (
         <>
-          <p>X: {currentPosition[0]}</p>
-          <p>Y: {currentPosition[1]}</p>
-          <p>Z: {currentPosition[2]}</p>
-          <p>nwscan id: {currentNetworkScanId}</p>
+          <p>X: </p>
+          <p>{currentPosition[0]}</p>
+          <p>Y:</p>
+          <p>{currentPosition[1]}</p>
+
+          <p>nwscan id: </p>
+          <p>{currentNetworkScanId}</p>
+
         </>
       
       ) : (
