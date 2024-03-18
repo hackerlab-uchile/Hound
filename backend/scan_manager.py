@@ -7,7 +7,6 @@ from datetime import datetime
 fifo_pipe = 'signalpipe'
 manager_path = './scan_manager.sh'
 stop_path = './stop_scan.sh'
-count = 0
 file = open('monitor.txt', 'w')
 array_stations = []
 parsed_stations = []
@@ -59,9 +58,9 @@ def get_scannings():
             if not line:
                 break
             # array_stations.append(str(line))
-            parse_scannings(str(line))
+            parse_scannings(str(line), 0)
 
-def parse_scannings(line):
+def parse_scannings(line, count):
     # for j in range (0,len(array_stations)):
     # line = array_stations[j]
     i=-1
