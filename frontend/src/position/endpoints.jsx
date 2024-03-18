@@ -17,7 +17,6 @@ function setTimeLocations(datetime){
 
 // Sends the location data to the fastapi endpoints
 const sendLocationData = async (locationData) => {
-    console.log("location data", locationData)
     try {
         // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
         const response = await fetch('https://10.42.0.1/api/locations/create/', {
@@ -82,6 +81,7 @@ const stopScan = async () => {
 
 // Sends the nw data to the fastapi endpoints
 const sendNetworkData = async () => {
+    console.log("time locs", firstTimeLocations)
     try {
         // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
         const response = await fetch('https://10.42.0.1/api/networks/create/', {
