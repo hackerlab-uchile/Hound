@@ -174,7 +174,7 @@ def stop_scanning():
 # Function dedicated to send the start instruction to the other 
 @app.post('/first_signal_scan')
 def get_first_signal(data: str):
-    first_signal_scan_time = data
+    global first_signal_scan_time = data
 
 
 
