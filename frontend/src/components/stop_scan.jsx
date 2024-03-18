@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Accelerometer from '../position/accelerometer';
 import MovementPlot from '../components/movement_graph';
 import BeginScan from "./begin_scan";
-import { stopScan, sendDatestoNwScan } from '../position/endpoints';
+import { stopScan, sendNetworkData } from '../position/endpoints';
 import { getTimeLocations } from '../position/posCalculation'
 
 const Button = styled.button`
@@ -30,7 +30,7 @@ class StopScan extends React.Component {
     handleClick = () => {
         this.props.toggleStopButton();
         this.showMovementPlot();
-        sendDatestoNwScan();
+        sendNetworkData();
         stopScan();
     };
 

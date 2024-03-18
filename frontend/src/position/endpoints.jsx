@@ -57,22 +57,7 @@ const startScan = async () => {
     }
 };
 
-const sendDatestoNwScan = async () => {
-    try {
-        // fetch uses the RPI's Caddy URL, to avoid problems with the lack of HTTPS
-        const response = await fetch('https://10.42.0.1/api/set_first_signal_time', {
-        method: "POST",  
-        });
-        if (!response.ok) {
-            throw new Error('Failed to send data');
-        }
 
-        const responseData = await response.json();
-        console.log('Response from FastAPI:', responseData);
-    } catch (error) {
-        console.error('Error sending data:', error);
-    }
-};
 
 
 // Sends the instruction to stop the scan of fastapi endpoints
@@ -117,4 +102,4 @@ const sendNetworkData = async () => {
     }
 };
 
-export { sendLocationData, startScan, stopScan, sendDatestoNwScan, setTimeLocations};
+export { sendLocationData, startScan, stopScan, sendNetworkData, setTimeLocations};
