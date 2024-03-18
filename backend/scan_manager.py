@@ -92,13 +92,15 @@ def parse_scannings(line):
             if not (" " in line[i+1] ):
                 pwr = line[i: i+3]
                 i += 2
-                
+        
+        if(i == 0):
+            first_signal_started_at = now.strftime("%d/%m/%YT%H:%M:%S")
+
         if (station != "" and pwr != "" and bssid != ""):
-            request_data = { 'network_scan_id': nwid, 'station': station, 'pwr':pwr,'signal_started_at': now.strftime("%d/%m/%YT%H:%M:%S") }
+            request_data = { 'network_scan_id': nwid, 'station': station, 'pwr':pwr, 'signal_started_at': now.strftime("%d/%m/%YT%H:%M:%S") }
             request = requests.post(urlsignal, json.dumps(request_data))
             print(request_data)
-            if(i == 0):
-                first_signal_started_at = now.strftime("%d/%m/%YT%H:%M:%S")
+
             bssid = ""
             station = ""
             pwr = ""

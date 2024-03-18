@@ -20,7 +20,7 @@ class SignalScans(Base):
     network_scan_id = Column(Integer, index = True)
     station = Column(String)
     pwr = Column(Float)
-    signal_started_at = Column(DateTime, server_default=func.now()) 
+    signal_started_at = Column(DateTime)
 
 
 # Location scans contains the location on a certain time of the device.  
