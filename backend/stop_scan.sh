@@ -5,7 +5,9 @@ echo 'Stopping scan...'
 tmux send-keys -t "$(uuid).0" C-c
 sleep 1
 tmux send-keys -t "$(uuid).0" "exit" ENTER
-sleep 5
+sleep 1
+tmux send-keys -t "$(uuid).1" C-c
+sleep 1
 tmux send-keys -t "$(uuid).1" "exit" ENTER
 
 

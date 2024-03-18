@@ -105,7 +105,6 @@ def parse_scannings(line):
                 print (now.strftime("%d/%m/%YT%H:%M:%S"))
                 is_empty = False
 
-            print(request_data)
             bssid = ""
             station = ""
             pwr = ""
