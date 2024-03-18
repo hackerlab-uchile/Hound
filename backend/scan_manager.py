@@ -101,8 +101,8 @@ def parse_scannings(line):
             request = requests.post(urlsignal, json.dumps(request_data))
             
             if(is_empty):
-                requests.post(urlfirstsignal, now.strftime("%d/%m/%YT%H:%M:%S"))
-                print (now.strftime("%d/%m/%YT%H:%M:%S"))
+                response = requests.post(urlfirstsignal, data=now.strftime("%Y-%m-%dT%H:%M:%S"))
+                print (response.response.json())
                 is_empty = False
 
             bssid = ""
