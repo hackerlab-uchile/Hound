@@ -100,7 +100,7 @@ def parse_scannings(line):
             signal_started_at = now.strftime("%Y-%m-%dT%H:%M:%S")
             request_data = { 'network_scan_id': nwid+1, 'station': station, 'pwr':pwr, 'signal_started_at': signal_started_at }
             request = requests.post(urlsignal, json.dumps(request_data))
-            
+            print(request)
             if(is_empty):
                 print(signal_started_at)
                 response = requests.post(urlfirstsignal, data = signal_started_at)

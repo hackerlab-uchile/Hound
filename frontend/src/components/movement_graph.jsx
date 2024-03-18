@@ -13,9 +13,6 @@ const Container = styled.div`
 
 function MovementPlot() {
     const [data, setData] = useState([]);
-    // var x = [1, 2, 3, 4, 5];
-    // var y = [2, 3, 4, 5, 6];
-    // var intensity = [10, 20, 80, 40, 50];
 
 
 
@@ -29,12 +26,12 @@ function MovementPlot() {
     const xValues = data.map((element)=> element.x)
     const yValues = data.map((element)=> element.y)
 
-    var intensity = [];
-    for (var i = 0; i < xValues.length; i++) {
-        var randomColor = (Math.random(1, 100))
-        intensity.push(randomColor);
-    }
-
+    // var intensity = [];
+    // for (var i = 0; i < xValues.length; i++) {
+    //     var randomColor = (Math.random(1, 100))
+    //     intensity.push(randomColor);
+    // }
+    intensity = []
     const plotData = [{
         x: xValues,
         y: yValues,
