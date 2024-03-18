@@ -10,6 +10,13 @@ const Text = styled.p`
   color: #8e59a8;
 `;
 
+const MiniTitle = styled.h3`
+  font-family: Helvetica;
+  text-align: center;
+  color: #603973;
+`;
+
+
 
 function Accelerometer() {
 
@@ -182,13 +189,13 @@ function Accelerometer() {
     <>
       {permissionGranted ? (
         <>
-          <p>X: </p>
-          <p>{currentPosition[0]}</p>
-          <p>Y:</p>
-          <p>{currentPosition[1]}</p>
+          <MiniTitle>X: </MiniTitle>
+          <Text>{currentPosition[0]}</Text>
+          <MiniTitle>Y:</MiniTitle>
+          <Text>{currentPosition[1]}</Text>
 
-          <p>nwscan id: </p>
-          <p>{currentNetworkScanId}</p>
+          <MiniTitle>nwscan id: </MiniTitle>
+          <Text >{currentNetworkScanId}</Text>
 
         </>
       
