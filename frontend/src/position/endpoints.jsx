@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 // Global const
-const [firstTimeLocations, setFirstTimeLocations] = useState(null)
+const firstTimeLocations = null
 
 
 // usable functions
 
 function setTimeLocations(datetime){
-    setFirstTimeLocations(datetime);
+    firstTimeLocations = datetime;
 }
 
 
@@ -117,4 +117,4 @@ const sendNetworkData = async () => {
     }
 };
 
-export { sendLocationData, startScan, stopScan, sendDatestoNwScan, getTimeLocations, setTimeLocations};
+export { sendLocationData, startScan, stopScan, sendDatestoNwScan, setTimeLocations};
