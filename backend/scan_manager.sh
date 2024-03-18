@@ -9,5 +9,5 @@ uuid="(uuidgen)" && tmux new -d -s "$uuid"
 tmux splitw -h -t "${uuid}:0.0"
 tmux send-keys -t "${uuid}.0" "expect scan_manager.exp" ENTER
 tmux send-keys -t "${uuid}.1" "python -c 'import scan_manager; scan_manager.get_scannings()'" ENTER
-# tmux a -t "$uuid"
+tmux a -t "$uuid"
 
