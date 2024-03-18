@@ -10,7 +10,6 @@ from sqlalchemy import select, desc,  and_
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 
-# indicates if the app is on a development enviroment
 
 
 app = FastAPI(root_path = '/api/')
@@ -35,8 +34,7 @@ models.Base.metadata.create_all(bind=engine_signal)
 models.Base.metadata.create_all(bind=engine_network)
 
 
-#global variables
-first_signal_scan_time
+first_signal_scan_time = ""
 
 # database getters
 def get_locations_db():
